@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.9fc3365b.css",
-    "main.js": "/static/js/main.ccc29ae6.js",
+    "main.js": "/static/js/main.6957bd54.js",
     "static/media/heroesLLCpic.png": "/static/media/heroesLLCpic.4ae1cd766f083e409315.png",
     "static/media/cluegame.png": "/static/media/cluegame.2230927a31b7f02c6469.png",
     "static/media/psmelvinson.png": "/static/media/psmelvinson.191c0d1303b7066a2693.png",
@@ -18,10 +18,10 @@
     "static/media/ng.png": "/static/media/ng.eb61c8fa009d1215b265.png",
     "index.html": "/index.html",
     "main.9fc3365b.css.map": "/static/css/main.9fc3365b.css.map",
-    "main.ccc29ae6.js.map": "/static/js/main.ccc29ae6.js.map"
+    "main.6957bd54.js.map": "/static/js/main.6957bd54.js.map"
   },
   "entrypoints": [
     "static/css/main.9fc3365b.css",
-    "static/js/main.ccc29ae6.js"
+    "static/js/main.6957bd54.js"
   ]
 }
