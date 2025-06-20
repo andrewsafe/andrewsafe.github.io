@@ -40,7 +40,7 @@ const Footer = () => {
           <FaGithub />
         </a>
         <a
-          href="https://andrewsafe.github.io/andrews-portfolio/resume.pdf"
+          href="https://andrewsafe.github.io/resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
         >
