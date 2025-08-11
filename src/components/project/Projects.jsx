@@ -2,9 +2,10 @@ import React from "react";
 import "./project.css";
 import IMG1 from "../../assets/heroesLLCpic.png";
 import IMG2 from "../../assets/cluegame.png";
-import IMG3 from "../../assets/underMSRP.png";
-import IMG4 from "../../assets/CarM.png";
-import IMG5 from "../../assets/tasksapp.png";
+import IMG3 from "../../assets/poker5hand.png";
+import IMG4 from "../../assets/underMSRP.png";
+import IMG5 from "../../assets/CarM.png";
+import IMG6 from "../../assets/tasksapp.png";
 
 const projects = [
   {
@@ -24,20 +25,27 @@ const projects = [
   {
     id: 3,
     image: IMG3,
+    title: "5 Hand Poker",
+    github: "https://github.com/andrewsafe/project2_asaifnoorian",
+    demo: "",
+  },
+  {
+    id: 4,
+    image: IMG4,
     title: "Under MSRP App",
     github: "https://github.com/andrewsafe/BulkEmails",
     demo: "https://undermsrp.netlify.app/",
   },
   {
-    id: 4,
-    image: IMG4,
+    id: 5,
+    image: IMG5,
     title: "Car Maintenance App",
     github: "https://github.com/SKhan2001/CarTracker",
     demo: "",
   },
   {
-    id: 5,
-    image: IMG5,
+    id: 6,
+    image: IMG6,
     title: "Tasks Web App",
     github: "https://github.com/andrewsafe/tasks-app",
     demo: "",
