@@ -4,6 +4,7 @@ import AVTR1 from "../../assets/psmelvinson.png";
 import AVTR2 from "../../assets/amavs.png";
 import AVTR3 from "../../assets/mahdyf.jpg";
 import AVTR4 from "../../assets/tnoble.jpg";
+import AVTR5 from "../../assets/shorrigan.png";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -26,12 +27,19 @@ const peers = [
     avatar: AVTR3,
     name: "Mahdy Ferdaos",
     review:
-      "Working alongside Andrew has been great. His learning is exponential.",
+      "Working alongside Andrew has been great. His learning is exponential. He is always eager to learn and improve his skills.",
   },
   {
     avatar: AVTR4,
     name: "Tyler Noble",
-    review: "Andrew is next up in cyber.",
+    review:
+      "Andrew is next up in cyber. He is a great team player and has a strong work ethic.",
+  },
+  {
+    avatar: AVTR5,
+    name: "Samuel Horrigan",
+    review:
+      "There is no one that has more conviction than Andrew when it comes to data structures and algorithms.",
   },
 ];
 

@@ -39,7 +39,7 @@ const Contact = () => {
         <div className="contact_options">
           <article className="contact_option">
             <a
-              href="https://andrewsafe.github.io/andrews-portfolio/resume.pdf"
+              href="https://andrewsafe.github.io/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
             >
