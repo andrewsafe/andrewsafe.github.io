@@ -1,11 +1,12 @@
 import React from "react";
 import "./project.css";
 import IMG1 from "../../assets/heroesLLCpic.png";
-import IMG2 from "../../assets/cluegame.png";
-import IMG3 from "../../assets/poker5hand.png";
-import IMG4 from "../../assets/underMSRP.png";
-import IMG5 from "../../assets/CarM.png";
-import IMG6 from "../../assets/tasksapp.png";
+import IMG2 from "../../assets/primedtNJ.png";
+import IMG3 from "../../assets/cluegame.png";
+import IMG4 from "../../assets/poker5hand.png";
+import IMG5 from "../../assets/underMSRP.png";
+import IMG6 from "../../assets/CarM.png";
+import IMG7 from "../../assets/tasksapp.png";
 
 const projects = [
   {
@@ -18,34 +19,41 @@ const projects = [
   {
     id: 2,
     image: IMG2,
+    title: "Prime Detailing NJ",
+    github: "",
+    demo: "https://primedetailing.biz/",
+  },
+  {
+    id: 3,
+    image: IMG3,
     title: "Clue Game",
     github: "https://github.com/andrewsafe/clue-game",
     demo: "https://67565c59e06325000836e7ec--clue-game.netlify.app/",
   },
   {
-    id: 3,
-    image: IMG3,
+    id: 4,
+    image: IMG4,
     title: "5 Hand Poker",
     github: "https://github.com/andrewsafe/project2_asaifnoorian",
     demo: "",
   },
   {
-    id: 4,
-    image: IMG4,
+    id: 5,
+    image: IMG5,
     title: "Under MSRP App",
     github: "https://github.com/andrewsafe/BulkEmails",
     demo: "https://undermsrp.netlify.app/",
   },
   {
-    id: 5,
-    image: IMG5,
+    id: 6,
+    image: IMG6,
     title: "Car Maintenance App",
     github: "https://github.com/SKhan2001/CarTracker",
     demo: "",
   },
   {
-    id: 6,
-    image: IMG6,
+    id: 7,
+    image: IMG7,
     title: "Tasks Web App",
     github: "https://github.com/andrewsafe/tasks-app",
     demo: "",
