@@ -1,30 +1,29 @@
 {
   "files": {
     "main.css": "/static/css/main.4d8f7c2f.css",
-    "main.js": "/static/js/main.2c860e57.js",
+    "main.js": "/static/js/main.1e2ffe02.js",
     "static/media/heroesLLCpic.png": "/static/media/heroesLLCpic.4ae1cd766f083e409315.png",
-    "static/media/me.png": "/static/media/me.b7bd48a1164902b51bbe.png",
     "static/media/cluegame.png": "/static/media/cluegame.2230927a31b7f02c6469.png",
     "static/media/psmelvinson.png": "/static/media/psmelvinson.191c0d1303b7066a2693.png",
     "static/media/CarM.png": "/static/media/CarM.e43eecb0fc0c824bece3.png",
     "static/media/primedtNJ.png": "/static/media/primedtNJ.c51ad95c590aa71e27fc.png",
     "static/media/tasksapp.png": "/static/media/tasksapp.d4d27302e8631e0bfa65.png",
-    "static/media/amavs.png": "/static/media/amavs.0d54bd791648a29dd2be.png",
     "static/media/shorrigan.png": "/static/media/shorrigan.b1f54fe222828877563d.png",
     "static/media/underMSRP.png": "/static/media/underMSRP.0b11ea3be8b53aaf9888.png",
     "static/media/mahdyf.jpg": "/static/media/mahdyf.035171322e7968cca597.jpg",
     "static/media/sql.png": "/static/media/sql.aa95c2d653ff2aa6e90a.png",
     "static/media/poker5hand.png": "/static/media/poker5hand.a830aab5528482fdbe4e.png",
     "static/media/tnoble.jpg": "/static/media/tnoble.5e7d642bba294d21f2f1.jpg",
+    "static/media/me.png": "/static/media/me.4f601bef6a8b6c5185a3.png",
     "static/media/java.png": "/static/media/java.dfbc7b3cfa00014f15af.png",
     "static/media/node.jpg": "/static/media/node.17aff3218b3ce956a5b2.jpg",
     "static/media/ng.png": "/static/media/ng.eb61c8fa009d1215b265.png",
     "index.html": "/index.html",
     "main.4d8f7c2f.css.map": "/static/css/main.4d8f7c2f.css.map",
-    "main.2c860e57.js.map": "/static/js/main.2c860e57.js.map"
+    "main.1e2ffe02.js.map": "/static/js/main.1e2ffe02.js.map"
   },
   "entrypoints": [
     "static/css/main.4d8f7c2f.css",
-    "static/js/main.2c860e57.js"
+    "static/js/main.1e2ffe02.js"
   ]
 }
