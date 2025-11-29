@@ -20,15 +20,9 @@ const Services = () => {
             <li>
               <FaCheckSquare className="service_list-icon" />
               <p>
-<<<<<<< HEAD
-                Refactoring PDF batch processing algorithms to enhance
-                scalability and efficiency across diverse file structures and
-                organizational hierarchies with Java Springboot and SQL 20.
-=======
                 Refactoring and modernizing Java/Spring Boot batch-processing
                 systems, boosting throughput up to 4x and cutting runtimes from
                 20 minutes to under 5.
->>>>>>> fix2
               </p>
             </li>
             <li>
