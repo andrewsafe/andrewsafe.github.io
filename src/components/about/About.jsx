@@ -33,10 +33,12 @@ const About = () => {
             </article>
           </div>
           <p>
-            Full Stack Developer with comprehensive knowledge in a wide range of
-            programming languages. Passionate about leveraging advanced coding
-            skills to drive innovative solutions and make meaningful
-            contributions to technology-driven projects.
+            Full-stack software engineer focused on building secure, scalable
+            applications using React + TypeScript, Java/Spring Boot, and AWS
+            (Aurora/Postgres). Strong interest in neural networks and machine
+            learning, currently preparing for the AWS Solutions Architect -
+            Associate certification and completing Anthropic’s Claude training
+            courses on applied AI and model capability.
           </p>
           <a href="#project" className="btn btn-primary">
             {" "}
