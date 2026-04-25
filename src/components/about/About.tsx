@@ -138,7 +138,7 @@ const About = () => {
               >
                 <FaCertificate className="about_icon" />
                 <h5>Certificates</h5>
-                <CountingStat target={3} suffix="" label="" />
+                <CountingStat target={4} suffix="" label="" />
               </Link>
               <a
                 className="about_card about_card--link"
