@@ -48,6 +48,7 @@ const projects: Project[] = [
       "Extended Monodepth2 with a Poggi-style per-pixel uncertainty head to improve depth on specular and reflective surfaces. Trained on the Booster dataset and evaluated with 7 depth metrics + sparsification analysis (AUSE/AURG). Our best checkpoint (epoch 15) beats all baselines including fine-tuned reference models on every metric.",
     techStack: ["Python", "PyTorch", "Monodepth2", "Booster Dataset", "TensorBoard", "AUSE/AURG"],
     accentHue: 280,
+    paper: "/monodepth2-uncertainty-paper.pdf",
     expandedContent: {
       overview:
         "Standard self-supervised monocular depth estimation (SS-MDE) struggles on specular, reflective, or translucent surfaces because the photometric consistency assumption breaks down — a mirror doesn't produce a reliable reprojection error. This project extended Monodepth2 (Godard et al., ICCV 2019) with a per-pixel predictive uncertainty head inspired by Poggi et al. (CVPR 2020), and evaluated the full pipeline on the Booster dataset: a high-resolution indoor stereo benchmark designed specifically for non-Lambertian surfaces (46 evaluation images, 28 scenes including mirrors, glass, and metallic objects). The uncertainty head learns which pixels to trust during training, down-weighting specular regions via an NLL loss so the network receives a cleaner photometric signal for depth learning.",
