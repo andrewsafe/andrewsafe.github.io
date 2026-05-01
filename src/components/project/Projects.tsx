@@ -13,6 +13,7 @@ import IMG8 from "../../assets/CarM.webp";
 import IMG9 from "../../assets/tasksapp.webp";
 import IMG10 from "../../assets/monodepth2-uncertainty.webp";
 import IMG11 from "../../assets/monodepth2-disp.webp";
+import IMG12 from "../../assets/localai-stack.webp";
 import AnimatedSection from "../animated-section/AnimatedSection";
 import TiltCard from "../tilt-card/TiltCard";
 import BlurImage from "../blur-image/BlurImage";
@@ -62,6 +63,32 @@ const projects: Project[] = [
       ],
       result:
         "Depth accuracy on Booster (46 images, 28 scenes): our NLL log_var model at epoch 15 achieved Abs Rel 0.255, Sq Rel 0.152, RMSE 0.402, a1 0.499 — beating the best reference checkpoint (Abs Rel 0.274, a1 0.419) on every single metric, a 7% relative improvement in Abs Rel and 19% in a1. The KITTI-pretrained baseline with no Booster fine-tuning scored Abs Rel 0.579, confirming the dataset shift. Sparsification: NLL log_var AUSE 0.182 / AURG −0.072; MC Dropout AUSE 0.131 / AURG −0.034. Both AURGs are negative, revealing a key insight: the uncertainty head correctly flags specular regions (confirmed by heatmaps) but LiDAR GT depth is still accurate at those pixels, so removing uncertain pixels hurts the aggregate metric. Photometric uncertainty ≠ geometric uncertainty — the model is uncertain because specularity breaks the photometric loss, not because the depth is wrong. MC Dropout is better-calibrated (AUSE 0.131 vs 0.182) because it captures model epistemic uncertainty rather than photometric violation. The NLL training proves its value at the depth-accuracy level even when uncertainty calibration by AURG is imperfect.",
+    },
+  },
+  {
+    id: 12,
+    image: IMG12,
+    title: "Local AI Inference Stack",
+    category: "AI Infrastructure / DevOps",
+    description:
+      "Containerized local inference environment running Gemma 4 (26B MoE) and Kimi K2.6 on an RTX 5080 with GPU passthrough via Docker. Exposes an OpenAI-compatible REST API and an Open WebUI chat interface — fully air-gapped, no cloud dependency.",
+    techStack: ["Docker", "Ollama", "Gemma 4", "Kimi K2.6", "Open WebUI", "NVIDIA RTX 5080"],
+    accentHue: 160,
+    expandedContent: {
+      overview:
+        "A production-adjacent, self-hosted LLM inference stack designed to run state-of-the-art open models on consumer hardware without any cloud dependency. The stack pairs Ollama (inference runtime) with Open WebUI (browser chat interface) behind a Docker Compose bridge network. GPU passthrough is enabled via Docker Desktop's WSL2 NVIDIA integration, giving the inference container direct access to the RTX 5080's 16 GB of GDDR7 VRAM. The environment runs two models simultaneously: Google's Gemma 4 (26B MoE — ~4B active parameters per token at Q4, ~14 GB VRAM) as the primary reasoning engine, and Moonshot AI's Kimi K2.6 (state-of-the-art open model with leading coding and agentic capabilities, accessed via Ollama's cloud endpoint) as a second inference target.",
+      approach: [
+        "Docker Compose stack: ollama service on 172.30.0.10:11434 with NVIDIA GPU passthrough (deploy.resources.reservations), Open WebUI on 172.30.0.11→localhost:3000 with health-gated startup",
+        "GPU configuration: OLLAMA_FLASH_ATTENTION=1 (Blackwell tensor-core path, ~30% throughput gain), OLLAMA_NUM_PARALLEL=2, OLLAMA_MAX_LOADED_MODELS=2 — keeps both Gemma 4 and Kimi K2.6 resident in VRAM simultaneously",
+        "Model selection: gemma4:26b (Mixture of Experts — only ~4B parameters activate per forward pass, so the 26B model runs at 4B cost in VRAM throughput), VRAM budget ~14 GB leaving headroom for the second model",
+        "Kimi K2.6 integration: Moonshot AI's open model with state-of-the-art coding and agentic benchmarks, accessed via 'ollama launch claude --model kimi-k2.6:cloud' — no separate API key required",
+        "Makefile automation: make up / make pull-all / make models / make status — operational runbook encoded as targets so the stack is reproducible from a cold machine in under 5 minutes",
+        "OpenAI-compatible API at localhost:11434/api/chat — any LangChain, LlamaIndex, or AutoGen orchestrator can route to the local stack by changing a single base_url; no code changes needed",
+        "Prompt engineering guide in README: token hygiene rules for orchestrator-to-model calls — strip boilerplate from instruction-tuned models, use role arrays not concatenated strings, cap RAG chunks at 300–400 tokens, disable streaming for agent-to-agent calls",
+        "CPU tuning: OLLAMA_NUM_THREAD=6 pins inference threads to 6 of the 9800X3D's 8 cores (the 3D V-Cache makes these the fastest consumer CPU cores for matrix operations), leaving 2 for the host OS",
+      ],
+      result:
+        "A fully self-hosted inference environment capable of running 26B-parameter MoE models at consumer-GPU speeds with zero cloud cost. The RTX 5080 + Gemma 4 26B configuration delivers interactive-speed token generation (~40–60 tok/s at Q4) — competitive with hosted API latency for single-user workloads. Kimi K2.6 is available as a second model on the same endpoint for coding and agentic tasks where its benchmark numbers lead the open-model field. The entire stack comes up from scratch with 'make up && make pull-all' and exposes a chat UI at localhost:3000 and a raw REST API at localhost:11434 — no API keys, no rate limits, no data leaving the machine.",
     },
   },
   {
@@ -470,9 +497,9 @@ const ProjectIntroPanel = () => (
         Projects
       </h2>
       <p className="prj-intro-body">
-        Eleven projects spanning full-stack web applications, deep learning research, DevOps
-        pipelines, and client work. Each one built end-to-end, from architecture decisions to
-        deployment.
+        Twelve projects spanning full-stack web applications, deep learning research, AI
+        infrastructure, DevOps pipelines, and client work. Each one built end-to-end, from
+        architecture decisions to deployment.
       </p>
       <div className="prj-intro-ctas">
         <a
@@ -558,7 +585,7 @@ const ProjectPanel = ({
 );
 
 // ── Sticky scroll showcase ─────────────────────────────────────────────────
-const TOTAL_PANELS = projects.length + 1; // 1 intro + 11 projects
+const TOTAL_PANELS = projects.length + 1; // 1 intro + N projects
 const STEP_MS = 500;
 
 const ProjectShowcase = () => {
