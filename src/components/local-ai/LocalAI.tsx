@@ -276,11 +276,11 @@ const LAIIntroPanel = () => (
         the machine, no rate limits.
       </p>
       <div className="lai-spec-strip">
-        <span>Gemma 4 · 4B params</span>
-        <span>3.3 GB on-disk</span>
+        <span>Gemma 4 · 26B MoE</span>
+        <span>~14 GB VRAM</span>
         <span>128K context</span>
-        <span>0 API calls</span>
-        <span>5-stage CI/CD</span>
+        <span>Kimi K2.6</span>
+        <span>RTX 5080 GPU</span>
         <span>100% private</span>
       </div>
       <motion.p

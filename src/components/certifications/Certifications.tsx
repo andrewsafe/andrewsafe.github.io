@@ -168,8 +168,8 @@ const Certifications = () => (
       <h1 className="certs-headline">Credentials</h1>
       <p className="certs-subtext">
         Two Anthropic MCP certifications earned at JPMorgan Chase in Jersey City, one Anthropic AI
-        Fluency credential and a ServiceNow Certified Application Developer credential earned at
-        M&T Bank in Buffalo.
+        Fluency credential and a ServiceNow Certified Application Developer credential earned at M&T
+        Bank in Buffalo.
       </p>
       <a href="/" className="certs-back">
         ← Back to portfolio

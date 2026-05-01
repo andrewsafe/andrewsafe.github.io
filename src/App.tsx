@@ -1,14 +1,7 @@
 import { useRef, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
-const ScrollToTop = () => {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  return null;
-};
-import { AnimatePresence, motion } from "framer-motion";
 import Nav from "./components/nav/Nav";
 import About from "./components/about/About";
 import Experience from "./components/experience/Experience";
@@ -21,7 +14,6 @@ import Contact from "./components/contact/Contact";
 import Footer from "./components/footer/Footer";
 import Resume from "./components/resume/Resume";
 import Certifications from "./components/certifications/Certifications";
-
 import CursorGlow from "./components/cursor-glow/CursorGlow";
 import BackToTop from "./components/back-to-top/BackToTop";
 import NotFound from "./components/not-found/NotFound";
@@ -30,6 +22,14 @@ import EasterEgg from "./components/easter-egg/EasterEgg";
 import NoiseOverlay from "./components/noise-overlay/NoiseOverlay";
 import useDynamicFavicon from "./hooks/useDynamicFavicon";
 import usePerformanceTier from "./hooks/usePerformanceTier";
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 
 const ScrollProgress = () => {
   const barRef = useRef<HTMLDivElement>(null);

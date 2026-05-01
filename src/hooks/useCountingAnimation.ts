@@ -23,7 +23,7 @@ const useCountingAnimation = (
       controls.stop();
       unsubscribe();
     };
-  }, [inView, count, target, skip]);
+  }, [inView, target, skip]); // `count` is a stable MotionValue ref, excluded intentionally
 
   return { ref, display };
 };
