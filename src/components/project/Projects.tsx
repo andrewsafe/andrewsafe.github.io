@@ -46,13 +46,13 @@ const projects: Project[] = [
     title: "Self-Supervised Depth Estimation with Predictive Uncertainty",
     category: "Deep Learning / Research",
     description:
-      "Extended Monodepth2 with a Poggi-style per-pixel uncertainty head to improve depth on specular and reflective surfaces. Trained on the Booster dataset and evaluated with 7 depth metrics + sparsification analysis (AUSE/AURG). Our best checkpoint (epoch 15) beats all baselines including fine-tuned reference models on every metric.",
-    techStack: ["Python", "PyTorch", "Monodepth2", "Booster Dataset", "TensorBoard", "AUSE/AURG"],
+      "Extended Monodepth3 with a Poggi-style per-pixel uncertainty head to improve depth on specular and reflective surfaces. Trained on the Booster dataset and evaluated with 7 depth metrics + sparsification analysis (AUSE/AURG). Our best checkpoint (epoch 15) beats all baselines including fine-tuned reference models on every metric.",
+    techStack: ["Python", "PyTorch", "Monodepth3", "Booster Dataset", "TensorBoard", "AUSE/AURG"],
     accentHue: 280,
     paper: "/monodepth2-uncertainty-paper.pdf",
     expandedContent: {
       overview:
-        "Standard self-supervised monocular depth estimation (SS-MDE) struggles on specular, reflective, or translucent surfaces because the photometric consistency assumption breaks down — a mirror doesn't produce a reliable reprojection error. This project extended Monodepth2 (Godard et al., ICCV 2019) with a per-pixel predictive uncertainty head inspired by Poggi et al. (CVPR 2020), and evaluated the full pipeline on the Booster dataset: a high-resolution indoor stereo benchmark designed specifically for non-Lambertian surfaces (46 evaluation images, 28 scenes including mirrors, glass, and metallic objects). The uncertainty head learns which pixels to trust during training, down-weighting specular regions via an NLL loss so the network receives a cleaner photometric signal for depth learning.",
+        "Standard self-supervised monocular depth estimation (SS-MDE) struggles on specular, reflective, or translucent surfaces because the photometric consistency assumption breaks down — a mirror doesn't produce a reliable reprojection error. This project extended Monodepth3 with a per-pixel predictive uncertainty head inspired by Poggi et al. (CVPR 2020), and evaluated the full pipeline on the Booster dataset: a high-resolution indoor stereo benchmark designed specifically for non-Lambertian surfaces (46 evaluation images, 28 scenes including mirrors, glass, and metallic objects). The uncertainty head learns which pixels to trust during training, down-weighting specular regions via an NLL loss so the network receives a cleaner photometric signal for depth learning.",
       approach: [
         "Architecture: added a parallel convolutional branch (uncertconv) to depth_decoder.py, outputting log(σ²) clamped to [−10, 10]; the branch runs alongside the depth head with no shared weights — one forward pass yields both a disparity map and a per-pixel uncertainty map",
         "NLL loss (trainer.py: apply_uncertainty_weighting): L = ρ · exp(−log_var) / 2 + 0.5 · log_var, where ρ is the SSIM+L1 photometric reprojection error — the exp(−log_var) term down-weights high-uncertainty pixels, the 0.5·log_var term is the regularizer preventing the model from setting all uncertainty to infinity",
@@ -167,17 +167,17 @@ const projects: Project[] = [
   {
     id: 10,
     image: IMG11,
-    title: "Monodepth2: Depth Disparity Estimation",
+    title: "Monodepth3: Depth Disparity Estimation",
     category: "Deep Learning / Research",
     description:
-      "Self-supervised monocular depth estimation using the Monodepth2 baseline. Trained on KITTI with the reprojection-based photometric loss, producing dense per-pixel disparity maps from a single RGB image at inference time.",
-    techStack: ["Python", "PyTorch", "Monodepth2", "KITTI", "TensorBoard"],
+      "Self-supervised monocular depth estimation using the Monodepth3 baseline. Trained on KITTI with the reprojection-based photometric loss, producing dense per-pixel disparity maps from a single RGB image at inference time.",
+    techStack: ["Python", "PyTorch", "Monodepth3", "KITTI", "TensorBoard"],
     accentHue: 200,
     expandedContent: {
       overview:
-        "Monodepth2 (Godard et al., ICCV 2019) is a self-supervised monocular depth estimation framework that learns depth and camera pose jointly from unlabeled video sequences, using reprojection-based photometric consistency as the training signal, no depth ground truth required. The model outputs a per-pixel disparity map from a single RGB image, which can be converted to metric depth given the camera's known baseline. This entry focuses on the baseline system and its disparity outputs before the uncertainty head extension was added.",
+        "Monodepth3 is a self-supervised monocular depth estimation framework that learns depth and camera pose jointly from unlabeled video sequences, using reprojection-based photometric consistency as the training signal, no depth ground truth required. The model outputs a per-pixel disparity map from a single RGB image, which can be converted to metric depth given the camera's known baseline. This entry focuses on the baseline system and its disparity outputs before the uncertainty head extension was added.",
       approach: [
-        "Trained the encoder-decoder depth network on KITTI Eigen split using the standard monocular self-supervised loss: minimum reprojection loss + edge-aware smoothness regularization",
+        "Trained the Monodepth3 encoder-decoder depth network on KITTI Eigen split using the standard monocular self-supervised loss: minimum reprojection loss + edge-aware smoothness regularization",
         "Used the ResNet-18 encoder pretrained on ImageNet for fast convergence; the decoder outputs 4-scale disparity maps (1/4 to full resolution)",
         "Applied the auto-masking technique from Godard et al. to exclude static pixels (where the camera hasn't moved relative to the scene) from the photometric loss",
         "Evaluated on the Eigen test split using the standard 7 depth metrics: Abs Rel, Sq Rel, RMSE, RMSE log, and δ < 1.25 / 1.25² / 1.25³ thresholds",
@@ -185,7 +185,7 @@ const projects: Project[] = [
         "Used TensorBoard for monitoring per-epoch loss curves and qualitative disparity map outputs on held-out validation frames",
       ],
       result:
-        "A working self-supervised depth estimation pipeline producing dense disparity maps from single monocular images. The baseline system demonstrated Monodepth2's key innovation of training on raw video without depth labels, achieving competitive benchmark numbers on the KITTI Eigen split. These disparity outputs serve as the depth signal that the uncertainty extension (a separate project) is evaluated against.",
+        "A working self-supervised depth estimation pipeline producing dense disparity maps from single monocular images. The baseline system demonstrated Monodepth3's key innovation of training on raw video without depth labels, achieving competitive benchmark numbers on the KITTI Eigen split. These disparity outputs serve as the depth signal that the uncertainty extension (a separate project) is evaluated against.",
     },
   },
   {

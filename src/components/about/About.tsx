@@ -150,7 +150,7 @@ const About = () => {
                 <CountingStat target={10} suffix="+" label="projects completed" />
               </a>
             </div>
-            <WordReveal text="Full-stack software engineer focused on building secure, scalable applications using React + TypeScript, Java/Spring Boot, and AWS (Aurora/Postgres). Hands-on deploying local LLM infrastructure: containerized Gemma 4 on Ollama with Docker Compose, isolated bridge networking, and a 5-stage GitLab CI/CD pipeline with SonarQube and Trivy scanning. Deep learning research background, extended Monodepth2 with per-pixel predictive uncertainty for specular surface depth estimation. AWS Solutions Architect Associate candidate. Anthropic applied AI training completed." />
+            <WordReveal text="Full-stack software engineer focused on building secure, scalable applications using React + TypeScript, Java/Spring Boot, and AWS (Aurora/Postgres). Hands-on deploying local LLM infrastructure: containerized Gemma 4 on Ollama with Docker Compose, isolated bridge networking, and a 5-stage GitLab CI/CD pipeline with SonarQube and Trivy scanning. Deep learning research background, extended Monodepth3 with per-pixel predictive uncertainty for specular surface depth estimation. AWS Solutions Architect Associate candidate. Anthropic applied AI training completed." />
             <div className="about_ctas">
               <MagneticButton>
                 <a href="#project" className="btn btn-primary">

@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { FaExternalLinkAlt, FaMapMarkerAlt, FaCalendarAlt, FaMedal } from "react-icons/fa";
-import certMcpAdvanced from "../../assets/cert-mcp-advanced.webp";
 import "./certifications.css";
 
 interface Cert {
@@ -15,7 +14,6 @@ interface Cert {
   linkedinPostUrl: string;
   description: string;
   skills: string[];
-  image?: string;
 }
 
 const certs: Cert[] = [
@@ -38,7 +36,6 @@ const certs: Cert[] = [
       "Tool Orchestration",
       "Anthropic Claude",
     ],
-    image: certMcpAdvanced,
   },
   {
     id: 1,
@@ -118,12 +115,6 @@ const CertCard = ({ cert, index }: { cert: Cert; index: number }) => (
         <span key={s}>{s}</span>
       ))}
     </div>
-
-    {cert.image && (
-      <div className="cert-card__preview">
-        <img src={cert.image} alt={`${cert.name} certificate`} className="cert-card__preview-img" />
-      </div>
-    )}
 
     <div className="cert-card__info-row">
       <span className="cert-card__info-item">

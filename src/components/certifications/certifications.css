@@ -180,17 +180,6 @@
   border-radius: 999px;
 }
 
-.cert-card__preview {
-  border-radius: 0.75rem;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.cert-card__preview-img {
-  width: 100%;
-  display: block;
-  object-fit: contain;
-}
 
 .cert-card__info-row {
   display: flex;
