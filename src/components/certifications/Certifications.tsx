@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FaExternalLinkAlt, FaMapMarkerAlt, FaCalendarAlt, FaMedal } from "react-icons/fa";
+import certMcpAdvanced from "../../assets/cert-mcp-advanced.webp";
 import "./certifications.css";
 
 interface Cert {
@@ -14,6 +15,7 @@ interface Cert {
   linkedinPostUrl: string;
   description: string;
   skills: string[];
+  image?: string;
 }
 
 const certs: Cert[] = [
@@ -24,8 +26,8 @@ const certs: Cert[] = [
     date: "April 23, 2026",
     location: "Jersey City, NJ",
     locationDetail: "Earned while at JPMorgan Chase in Jersey City",
-    credentialId: "pending",
-    credentialUrl: "#",
+    credentialId: "vzcx395829ma",
+    credentialUrl: "https://verify.skilljar.com/c/vzcx395829ma",
     linkedinPostUrl: "https://www.linkedin.com/in/andrewsaifnoorian/",
     description:
       "Completed Anthropic's advanced-level course on the Model Context Protocol, building on foundational MCP knowledge to cover complex server architecture, multi-tool orchestration, authentication and security patterns, production deployment strategies, and building sophisticated Claude-powered agentic workflows with real-world external integrations.",
@@ -36,6 +38,7 @@ const certs: Cert[] = [
       "Tool Orchestration",
       "Anthropic Claude",
     ],
+    image: certMcpAdvanced,
   },
   {
     id: 1,
@@ -115,6 +118,12 @@ const CertCard = ({ cert, index }: { cert: Cert; index: number }) => (
         <span key={s}>{s}</span>
       ))}
     </div>
+
+    {cert.image && (
+      <div className="cert-card__preview">
+        <img src={cert.image} alt={`${cert.name} certificate`} className="cert-card__preview-img" />
+      </div>
+    )}
 
     <div className="cert-card__info-row">
       <span className="cert-card__info-item">
