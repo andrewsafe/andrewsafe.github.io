@@ -14,6 +14,7 @@ import IMG9 from "../../assets/tasksapp.webp";
 import IMG10 from "../../assets/monodepth2-uncertainty.webp";
 import IMG11 from "../../assets/monodepth2-disp.webp";
 import IMG12 from "../../assets/localai-stack.webp";
+import IMG13 from "../../assets/meg-decoding.webp";
 import AnimatedSection from "../animated-section/AnimatedSection";
 import TiltCard from "../tilt-card/TiltCard";
 import BlurImage from "../blur-image/BlurImage";
@@ -63,6 +64,31 @@ const projects: Project[] = [
       ],
       result:
         "Depth accuracy on Booster (46 images, 28 scenes): our NLL log_var model at epoch 15 achieved Abs Rel 0.255, Sq Rel 0.152, RMSE 0.402, a1 0.499 — beating the best reference checkpoint (Abs Rel 0.274, a1 0.419) on every single metric, a 7% relative improvement in Abs Rel and 19% in a1. The KITTI-pretrained baseline with no Booster fine-tuning scored Abs Rel 0.579, confirming the dataset shift. Sparsification: NLL log_var AUSE 0.182 / AURG −0.072; MC Dropout AUSE 0.131 / AURG −0.034. Both AURGs are negative, revealing a key insight: the uncertainty head correctly flags specular regions (confirmed by heatmaps) but LiDAR GT depth is still accurate at those pixels, so removing uncertain pixels hurts the aggregate metric. Photometric uncertainty ≠ geometric uncertainty — the model is uncertain because specularity breaks the photometric loss, not because the depth is wrong. MC Dropout is better-calibrated (AUSE 0.131 vs 0.182) because it captures model epistemic uncertainty rather than photometric violation. The NLL training proves its value at the depth-accuracy level even when uncertainty calibration by AURG is imperfect.",
+    },
+  },
+  {
+    id: 13,
+    image: IMG13,
+    title: "MEG Brain Decoding: Imagined Concept Classification",
+    category: "Deep Learning / Kaggle Competition",
+    description:
+      "Competed in the IMAGINE Decoding Challenge (Kaggle, Johns Hopkins DNN course) — a 10-class classification task decoding mentally imagined concepts from 306-channel MEG brain recordings. Built a 6-decoder weighted ensemble exploiting auditory-to-auditory same-modality transfer to bypass the perception-imagery domain gap. Final: 27th/169 teams, LB 0.133.",
+    techStack: ["Python", "MNE-Python", "scikit-learn", "GloVe Embeddings", "MEG", "Kaggle"],
+    accentHue: 185,
+    paper: "/meg-decoding-paper.pdf",
+    expandedContent: {
+      overview:
+        "The IMAGINE Decoding Challenge (Kaggle, hosted by Dr. Gordon Feld, Central Institute of Mental Health) required predicting which of 10 imagined concepts — apple, bicycle, brush, cake, clown, cup, desk, foot, mountain, zebra — a subject was mentally visualizing, based on 306-channel MEG (Magnetoencephalography) recordings. The dataset contained 15 training subjects with localizer trials (visual perception, 480 labeled epochs per subject) and imagine trials (mental imagery, 50 epochs per subject), plus 14 unlabeled test subjects. The core challenge is a cross-brain-state domain gap: classifiers must be trained on visual perception signals and applied to mental imagery — a related but neurologically distinct brain process that prior literature shows overlaps only partially with visual perception. Chance level was 10% (10 classes); the $600 prize required >=20% accuracy, which no team in our cohort reached.",
+      approach: [
+        "Key insight: the localizer epoch contains both a pre-visual auditory window (-1s to 0s, subjects hear the word cue) and a visual window (0-0.6s). The imagine epoch also begins with the same auditory cue (0-1s). Training on the localizer auditory window and applying it to the imagine auditory window is same-modality transfer — both capture the brain's response to an identical acoustic stimulus, completely bypassing the perception-imagery domain gap",
+        "6-decoder weighted ensemble: Auditory Sliding OvR (w=3.0), Auditory Full-Window classifier (w=2.0), Auditory GloVe embedding regression (w=1.5), Visual Sliding OvR (w=1.0), Visual Full-Window (w=0.5), Visual GloVe embedding regression (w=0.5). Final prediction = weighted sum of all six softmax probability outputs followed by argmax",
+        "Sliding window OvR bank: trains a separate L1-penalized One-vs-Rest logistic regression at every 10ms time step (50ms windows) across the training window. CV pruning discards windows where 3-fold CV accuracy <= 11%, keeping only discriminative time points. Null data injection — pre-stimulus baseline epochs labeled as a null class — sharpens class boundaries by teaching the model what neural activity is NOT class-relevant",
+        "Feature engineering: temporal windows (mean + std per channel across 5 sub-windows = 2040 features), band-power (theta 4-8 Hz, alpha 8-13 Hz, beta 13-30 Hz, gamma 30-45 Hz via Hilbert envelope = 816 features). PCA reduces to 50 components before logistic regression",
+        "GloVe word embedding regression: Ridge regression (alpha=100) predicts the 300-dim GloVe embedding of the target class from MEG features. At test time, the predicted embedding is matched to the 10 target words by cosine distance with temperature-scaled softmax — encodes semantic geometry (e.g., apple is closer to cake than to zebra) unavailable to flat 10-class classifiers",
+        "Gradiometers only (204/306 channels) after ablation study: magnetometers capture deep/diffuse sources and add inter-subject noise without improving single-trial class discrimination. ICA artifact removal was tested but excluded — it degraded performance because the MEGIN system's SSS preprocessing already removes environmental interference, and ICA risks removing task-relevant neural components",
+      ],
+      result:
+        "Final LB accuracy 0.133, rank 27/169 teams (top 16%), 34 submissions over 13 modules. Started from 59th/92 with an SVC baseline at 0.108 (week 2). Key lessons: (1) domain shift dominates over model complexity — the auditory-to-auditory same-modality decoder outperforms all cross-modal approaches regardless of sophistication; (2) Riemannian covariance features achieve 0.238 mean CV accuracy on localizer but collapse to 0.095 (chance) on imagery, showing spatial covariance structure does not generalize across brain states; (3) alpha-band log-variance decoder performs at chance both cross-task and within imagery (5-fold CV 0.088), ruling out sustained alpha suppression as a class-discriminating feature at this scale; (4) subject sub-26 exhibited degenerate prediction collapse (48/50 trials = 'zebra'), revealing a known per-subject OvR failure mode when one class's training distribution dominates a subject's brain geometry.",
     },
   },
   {
@@ -497,7 +523,7 @@ const ProjectIntroPanel = () => (
         Projects
       </h2>
       <p className="prj-intro-body">
-        Twelve projects spanning full-stack web applications, deep learning research, AI
+        Thirteen projects spanning full-stack web applications, deep learning research, AI
         infrastructure, DevOps pipelines, and client work. Each one built end-to-end, from
         architecture decisions to deployment.
       </p>
