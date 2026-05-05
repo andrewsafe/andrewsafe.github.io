@@ -1,7 +1,6 @@
-import { useRef, useEffect } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-
 import Nav from "./components/nav/Nav";
 import About from "./components/about/About";
 import Experience from "./components/experience/Experience";
@@ -23,11 +22,15 @@ import NoiseOverlay from "./components/noise-overlay/NoiseOverlay";
 import useDynamicFavicon from "./hooks/useDynamicFavicon";
 import usePerformanceTier from "./hooks/usePerformanceTier";
 
+const MarketButton = lazy(() => import("./components/market-button/MarketButton"));
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
   return null;
 };
 
@@ -82,6 +85,8 @@ const Home = () => (
   </>
 );
 
+const PageLoader = () => <div className="page-loader" aria-label="Loading page" />;
+
 const AnimatedRoutes = () => {
   const location = useLocation();
 
@@ -115,6 +120,14 @@ const AnimatedRoutes = () => {
             }
           />
           <Route
+            path="/market-button"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <MarketButton />
+              </Suspense>
+            }
+          />
+          <Route
             path="*"
             element={
               <motion.div {...pageTransition}>
@@ -124,6 +137,26 @@ const AnimatedRoutes = () => {
           />
         </Routes>
       </AnimatePresence>
+    </>
+  );
+};
+
+const AppChrome = () => {
+  const location = useLocation();
+  const isStandalonePage = location.pathname.startsWith("/market-button");
+
+  return (
+    <>
+      {!isStandalonePage && (
+        <>
+          <CursorGlow />
+          <BackToTop />
+          <CommandPalette />
+          <EasterEgg />
+          <NoiseOverlay />
+        </>
+      )}
+      <AnimatedRoutes />
     </>
   );
 };
@@ -138,12 +171,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <CursorGlow />
-      <BackToTop />
-      <CommandPalette />
-      <EasterEgg />
-      <NoiseOverlay />
-      <AnimatedRoutes />
+      <AppChrome />
     </BrowserRouter>
   );
 };

@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <script>
-      // Redirect all 404s to index.html for client-side routing
-      window.location.replace('/' + window.location.search + window.location.hash);
+      // Preserve deep links for GitHub Pages client-side routing.
+      sessionStorage.setItem("spaPath", window.location.pathname + window.location.search + window.location.hash);
+      window.location.replace("/");
     </script>
   </head>
   <body></body>

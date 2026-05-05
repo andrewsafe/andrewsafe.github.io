@@ -10,6 +10,11 @@
   transition: width 50ms linear;
 }
 
+.page-loader {
+  min-height: 100vh;
+  background: #f7f8f4;
+}
+
 * {
   margin: 0;
   padding: 0;
