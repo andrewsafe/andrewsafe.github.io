@@ -92,6 +92,31 @@ const projects: Project[] = [
     },
   },
   {
+    id: 1,
+    image: IMG2,
+    title: "Targeted Advertising ROI Classification Using Neural Networks",
+    category: "ML / Research",
+    description:
+      "Research project applying feedforward neural networks to classify advertising ROI across digital channels. Includes data preprocessing, model training, and evaluation with confusion matrices and accuracy metrics.",
+    techStack: ["Python", "TensorFlow", "Pandas", "NumPy", "Matplotlib"],
+    accentHue: 250,
+    paper: "/nn-final-project.pdf",
+    expandedContent: {
+      overview:
+        "The central question was whether a feedforward neural network could outperform classical classifiers on predicting ROI tier (low/medium/high) from digital advertising campaign features. The dataset included channel type, spend, impressions, clicks, and conversion metrics across multiple campaigns.",
+      approach: [
+        "Data preprocessing pipeline: StandardScaler normalization, label encoding for categorical channel types",
+        "Handled class imbalance via class_weight='balanced' in the loss function",
+        "Compared 2-layer vs. 3-layer FFNNs with ReLU activations and dropout regularization",
+        "Final architecture: Dense(128) → Dropout(0.3) → Dense(64) → Dropout(0.2) → Softmax(3)",
+        "Evaluated with confusion matrices, precision/recall/F1, and training loss/accuracy curves",
+        "Visualized decision boundaries and feature importance via gradient-based attribution",
+      ],
+      result:
+        "Published as a research paper (PDF). The 3-layer FFNN achieved ~87% classification accuracy, outperforming Logistic Regression by ~6pp. Precision was the primary metric due to the cost of misclassifying high-ROI campaigns as low-ROI and under-investing in them.",
+    },
+  },
+  {
     id: 12,
     image: IMG12,
     title: "Local AI Inference Stack",
@@ -115,31 +140,6 @@ const projects: Project[] = [
       ],
       result:
         "A fully self-hosted inference environment capable of running 26B-parameter MoE models at consumer-GPU speeds with zero cloud cost. The RTX 5080 + Gemma 4 26B configuration delivers interactive-speed token generation (~40–60 tok/s at Q4) — competitive with hosted API latency for single-user workloads. Kimi K2.6 is available as a second model on the same endpoint for coding and agentic tasks where its benchmark numbers lead the open-model field. The entire stack comes up from scratch with 'make up && make pull-all' and exposes a chat UI at localhost:3000 and a raw REST API at localhost:11434 — no API keys, no rate limits, no data leaving the machine.",
-    },
-  },
-  {
-    id: 1,
-    image: IMG2,
-    title: "Targeted Advertising ROI Classification Using Neural Networks",
-    category: "ML / Research",
-    description:
-      "Research project applying feedforward neural networks to classify advertising ROI across digital channels. Includes data preprocessing, model training, and evaluation with confusion matrices and accuracy metrics.",
-    techStack: ["Python", "TensorFlow", "Pandas", "NumPy", "Matplotlib"],
-    accentHue: 250,
-    paper: "/nn-final-project.pdf",
-    expandedContent: {
-      overview:
-        "The central question was whether a feedforward neural network could outperform classical classifiers on predicting ROI tier (low/medium/high) from digital advertising campaign features. The dataset included channel type, spend, impressions, clicks, and conversion metrics across multiple campaigns.",
-      approach: [
-        "Data preprocessing pipeline: StandardScaler normalization, label encoding for categorical channel types",
-        "Handled class imbalance via class_weight='balanced' in the loss function",
-        "Compared 2-layer vs. 3-layer FFNNs with ReLU activations and dropout regularization",
-        "Final architecture: Dense(128) → Dropout(0.3) → Dense(64) → Dropout(0.2) → Softmax(3)",
-        "Evaluated with confusion matrices, precision/recall/F1, and training loss/accuracy curves",
-        "Visualized decision boundaries and feature importance via gradient-based attribution",
-      ],
-      result:
-        "Published as a research paper (PDF). The 3-layer FFNN achieved ~87% classification accuracy, outperforming Logistic Regression by ~6pp. Precision was the primary metric due to the cost of misclassifying high-ROI campaigns as low-ROI and under-investing in them.",
     },
   },
   {
