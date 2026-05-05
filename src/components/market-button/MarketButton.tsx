@@ -19,6 +19,8 @@ import {
 import "./market-button.css";
 
 const STORAGE_KEY = "market-button-watchlist";
+const TICKER_KEY = "sb-selected-ticker";
+const RANGE_KEY = "sb-selected-range";
 const SMCI_MIGRATION_KEY = "market-button-smci-added-v2";
 const DASHBOARD_OWNER = "Sonny Saifnoorian";
 
@@ -60,7 +62,6 @@ const BREAKING_NEWS_TERMS = [
   "upgrade",
   "forecast",
 ];
-
 const RANGE_OPTIONS = [
   { label: "1D", range: "1D", interval: "5" },
   { label: "5D", range: "5D", interval: "15" },
@@ -86,6 +87,8 @@ type NewsAlert = {
   source: string;
 } | null;
 
+// ── Pure helpers ─────────────────────────────────────────────────────────
+
 const normalizeTicker = (value: string) =>
   value
     .replace(/[^a-zA-Z.]/g, "")
@@ -95,17 +98,17 @@ const normalizeTicker = (value: string) =>
 const uniqueTickers = (tickers: string[]) => Array.from(new Set(tickers));
 
 const toTradingViewSymbol = (ticker: string) => {
-  const marketIndex = MARKET_INDEXES.find((index) => index.ticker === ticker);
+  const marketIndex = MARKET_INDEXES.find((idx) => idx.ticker === ticker);
   if (marketIndex) return marketIndex.symbol;
   if (ticker.includes(".")) return ticker;
   return `NASDAQ:${ticker}`;
 };
 
 const isMarketIndexTicker = (ticker: string) =>
-  MARKET_INDEXES.some((index) => index.ticker === ticker);
+  MARKET_INDEXES.some((idx) => idx.ticker === ticker);
 
 const buildGoogleUrl = (ticker: string, searchType: SearchType | MarketAction["type"]) => {
-  const queries = {
+  const queries: Record<string, string> = {
     overview: `${ticker} stock AI overview`,
     news: `${ticker} stock news today`,
     finance: `${ticker} stock price`,
@@ -113,10 +116,8 @@ const buildGoogleUrl = (ticker: string, searchType: SearchType | MarketAction["t
     earnings: `${ticker} earnings date stock`,
     options: `${ticker} options chain stock`,
   };
-
   const params = new URLSearchParams({ q: queries[searchType] });
   if (searchType === "news") params.set("tbm", "nws");
-
   return `https://www.google.com/search?${params.toString()}`;
 };
 
@@ -127,7 +128,6 @@ const buildNewsFeedUrl = (ticker: string) => {
     gl: "US",
     ceid: "US:en",
   }).toString()}`;
-
   return `https://api.allorigins.win/raw?${new URLSearchParams({ url: feedUrl }).toString()}`;
 };
 
@@ -142,7 +142,6 @@ const isBreakingStyleHeadline = (title: string) => {
 const fetchWithTimeout = async (url: string, timeoutMs = 3500) => {
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
-
   try {
     return await fetch(url, { signal: controller.signal });
   } finally {
@@ -189,10 +188,10 @@ const formatRefreshedTime = (date: Date) =>
 
 const getMarketSession = (date: Date) => {
   const parts = getNewYorkParts(date);
-  const weekday = parts.find((part) => part.type === "weekday")?.value ?? "Mon";
-  const hourPart = Number(parts.find((part) => part.type === "hour")?.value ?? 0);
-  const minute = Number(parts.find((part) => part.type === "minute")?.value ?? 0);
-  const dayPeriod = parts.find((part) => part.type === "dayPeriod")?.value ?? "AM";
+  const weekday = parts.find((p) => p.type === "weekday")?.value ?? "Mon";
+  const hourPart = Number(parts.find((p) => p.type === "hour")?.value ?? 0);
+  const minute = Number(parts.find((p) => p.type === "minute")?.value ?? 0);
+  const dayPeriod = parts.find((p) => p.type === "dayPeriod")?.value ?? "AM";
   const hour =
     dayPeriod === "PM" && hourPart !== 12
       ? hourPart + 12
@@ -205,29 +204,17 @@ const getMarketSession = (date: Date) => {
   const close = 16 * 60;
 
   if (!isWeekend && minutes >= open && minutes < close) {
-    return {
-      label: "Market open",
-      detail: "Closes at 4:00 PM ET",
-      tone: "open",
-    };
+    return { label: "Market open", detail: "Closes at 4:00 PM ET", tone: "open" };
   }
-
   if (!isWeekend && minutes < open) {
-    return {
-      label: "Pre-market",
-      detail: "Opens at 9:30 AM ET",
-      tone: "pre",
-    };
+    return { label: "Pre-market", detail: "Opens at 9:30 AM ET", tone: "pre" };
   }
-
   const nextOpen =
     weekday === "Fri" || weekday === "Sat" ? "Mon 9:30 AM ET" : "next session 9:30 AM ET";
-  return {
-    label: "Market closed",
-    detail: `Opens ${nextOpen}`,
-    tone: "closed",
-  };
+  return { label: "Market closed", detail: `Opens ${nextOpen}`, tone: "closed" };
 };
+
+// ── TradingView chart widget ──────────────────────────────────────────────
 
 const TradingViewChart = ({
   symbol,
@@ -295,23 +282,44 @@ const TradingViewChart = ({
   );
 };
 
+// ── Main component ────────────────────────────────────────────────────────
+
 const MarketButton = () => {
   const [watchlist, setWatchlist] = useState<string[]>(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) return DEFAULT_WATCHLIST;
-
     try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (!stored) return DEFAULT_WATCHLIST;
       const parsed = JSON.parse(stored);
       if (!Array.isArray(parsed)) return DEFAULT_WATCHLIST;
-      const tickers = parsed.map((item) => normalizeTicker(String(item))).filter(Boolean);
+      const tickers = parsed.map((t: unknown) => normalizeTicker(String(t))).filter(Boolean);
       return tickers.length ? Array.from(new Set(tickers)) : DEFAULT_WATCHLIST;
     } catch {
       return DEFAULT_WATCHLIST;
     }
   });
-  const [selectedTicker, setSelectedTicker] = useState(watchlist[0] ?? "NVDA");
+
+  const [selectedTicker, setSelectedTicker] = useState<string>(() => {
+    const saved = localStorage.getItem(TICKER_KEY);
+    if (saved) {
+      const t = normalizeTicker(saved);
+      if (t) return t;
+    }
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : null;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return normalizeTicker(String(parsed[0])) || DEFAULT_WATCHLIST[0];
+      }
+    } catch { /* ignore */ }
+    return DEFAULT_WATCHLIST[0];
+  });
+
+  const [selectedRange, setSelectedRange] = useState<RangeOption>(() => {
+    const saved = localStorage.getItem(RANGE_KEY);
+    return RANGE_OPTIONS.find((r) => r.label === saved) ?? RANGE_OPTIONS[2];
+  });
+
   const [tickerInput, setTickerInput] = useState("");
-  const [selectedRange, setSelectedRange] = useState<RangeOption>(RANGE_OPTIONS[2]);
   const [refreshToken, setRefreshToken] = useState(0);
   const [lastUpdated, setLastUpdated] = useState(() => new Date());
   const [marketClock, setMarketClock] = useState(() => new Date());
@@ -340,10 +348,11 @@ const MarketButton = () => {
     [],
   );
 
+  // ── Side effects ──────────────────────────────────────────────────────
+
   useEffect(() => {
     document.body.classList.add("market-button-body");
-    document.title = `${DASHBOARD_OWNER} | Market Button`;
-
+    document.title = `${DASHBOARD_OWNER} | SonnySafe`;
     return () => {
       document.body.classList.remove("market-button-body");
       delete document.body.dataset.marketButtonTheme;
@@ -360,6 +369,24 @@ const MarketButton = () => {
     return () => window.clearInterval(interval);
   }, []);
 
+  // Persist selected ticker and range
+  useEffect(() => {
+    localStorage.setItem(TICKER_KEY, selectedTicker);
+  }, [selectedTicker]);
+
+  useEffect(() => {
+    localStorage.setItem(RANGE_KEY, selectedRange.label);
+  }, [selectedRange]);
+
+  // Persist watchlist + auto-correct selectedTicker if removed
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(watchlist));
+    if (!watchlist.includes(selectedTicker) && !isMarketIndexTicker(selectedTicker)) {
+      setSelectedTicker(watchlist[0] ?? "NVDA");
+    }
+  }, [selectedTicker, watchlist]);
+
+  // One-time SMCI migration
   useEffect(() => {
     if (localStorage.getItem(SMCI_MIGRATION_KEY)) return;
     setWatchlist((current) =>
@@ -368,23 +395,21 @@ const MarketButton = () => {
     localStorage.setItem(SMCI_MIGRATION_KEY, "true");
   }, []);
 
+  // ── API calls ─────────────────────────────────────────────────────────
+
   const loadWeather = useCallback(async () => {
     setWeatherStatus("loading");
-
     try {
       const response = await fetch(FORT_LEE_WEATHER_URL);
       if (!response.ok) throw new Error("Weather request failed");
-
       const data = await response.json();
       const current = Number(data.current?.temperature_2m);
       const high = Number(data.daily?.temperature_2m_max?.[0]);
       const low = Number(data.daily?.temperature_2m_min?.[0]);
       const weatherCode = Number(data.current?.weather_code);
-
       if (![current, high, low, weatherCode].every(Number.isFinite)) {
         throw new Error("Weather response was incomplete");
       }
-
       setWeather({
         current: Math.round(current),
         high: Math.round(high),
@@ -405,14 +430,11 @@ const MarketButton = () => {
   const checkBreakingNews = useCallback(
     async (tickers = watchlist) => {
       setNewsStatus("checking");
-
       try {
         const scanList = uniqueTickers(tickers).slice(0, 8);
-
         for (const ticker of scanList) {
           const response = await fetchWithTimeout(buildNewsFeedUrl(ticker));
           if (!response.ok) continue;
-
           const xml = await response.text();
           const doc = new DOMParser().parseFromString(xml, "text/xml");
           const items = Array.from(doc.querySelectorAll("item")).slice(0, 4);
@@ -420,27 +442,18 @@ const MarketButton = () => {
             const title = item.querySelector("title")?.textContent?.trim() ?? "";
             return title && isBreakingStyleHeadline(title);
           });
-
           if (match) {
             const title =
               match.querySelector("title")?.textContent?.trim() ?? `${ticker} market news`;
             const link =
               match.querySelector("link")?.textContent?.trim() || buildGoogleUrl(ticker, "news");
-
-            const alert = {
-              ticker,
-              title,
-              link,
-              source: getNewsSource(match),
-            };
-
+            const alert = { ticker, title, link, source: getNewsSource(match) };
             setLatestNewsAlert(alert);
             setNewsAlert(alert);
             setNewsStatus("idle");
             return;
           }
         }
-
         setNewsStatus("quiet");
       } catch {
         setNewsStatus("error");
@@ -455,48 +468,76 @@ const MarketButton = () => {
     void checkBreakingNews();
   }, [checkBreakingNews]);
 
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(watchlist));
-    if (!watchlist.includes(selectedTicker) && !isMarketIndexTicker(selectedTicker)) {
-      setSelectedTicker(watchlist[0] ?? "NVDA");
-    }
-  }, [selectedTicker, watchlist]);
+  // ── Actions ───────────────────────────────────────────────────────────
 
-  const addTicker = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const nextTicker = normalizeTicker(String(formData.get("ticker") ?? tickerInput));
-    if (!nextTicker) return;
-
-    setWatchlist((current) => uniqueTickers([nextTicker, ...current]));
-    setSelectedTicker(nextTicker);
-    setTickerInput("");
-  };
-
-  const removeTicker = (ticker: string) => {
-    setWatchlist((current) => current.filter((item) => item !== ticker));
-  };
-
-  const viewShortcut = (ticker: string) => {
-    setWatchlist((current) => uniqueTickers([...current, ticker]));
-    setSelectedTicker(ticker);
-  };
-
-  const viewMarketIndex = (ticker: string) => {
-    setSelectedTicker(ticker);
-  };
-
-  const refreshMarket = () => {
-    setRefreshToken((current) => current + 1);
+  const refreshMarket = useCallback(() => {
+    setRefreshToken((n) => n + 1);
     const now = new Date();
     setLastUpdated(now);
     setMarketClock(now);
     void loadWeather();
-  };
+  }, [loadWeather]);
+
+  const addTicker = useCallback(
+    (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+      const next = normalizeTicker(String(formData.get("ticker") ?? tickerInput));
+      if (!next) return;
+      setWatchlist((current) => uniqueTickers([next, ...current]));
+      setSelectedTicker(next);
+      setTickerInput("");
+    },
+    [tickerInput],
+  );
+
+  const removeTicker = useCallback((ticker: string) => {
+    setWatchlist((current) => current.filter((t) => t !== ticker));
+  }, []);
+
+  const viewShortcut = useCallback((ticker: string) => {
+    setWatchlist((current) => uniqueTickers([...current, ticker]));
+    setSelectedTicker(ticker);
+  }, []);
+
+  const viewMarketIndex = useCallback((ticker: string) => {
+    setSelectedTicker(ticker);
+  }, []);
+
+  const dismissNewsAlert = useCallback(() => setNewsAlert(null), []);
+
+  // ── Keyboard shortcuts ────────────────────────────────────────────────
+
+  const refreshMarketRef = useRef(refreshMarket);
+  refreshMarketRef.current = refreshMarket;
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement).tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA") return;
+
+      if (e.key === "Escape") {
+        setNewsAlert(null);
+        return;
+      }
+      if ((e.key === "r" || e.key === "R") && !e.metaKey && !e.ctrlKey) {
+        refreshMarketRef.current();
+        return;
+      }
+      if (e.key === "/") {
+        e.preventDefault();
+        document.getElementById("market-button-ticker")?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
+
+  // ── Render ────────────────────────────────────────────────────────────
 
   return (
     <main className="market-button">
-      <section className="market-button__shell" aria-label="Market Button dashboard">
+      <section className="market-button__shell" aria-label="SonnySafe dashboard">
         <header className="market-button__hero">
           <div>
             <p className="market-button__eyebrow">{formattedDate}</p>
@@ -510,6 +551,7 @@ const MarketButton = () => {
             className="market-button__primary"
             type="button"
             onClick={refreshMarket}
+            title="Refresh market data (R)"
             data-testid="market-refresh"
           >
             <FaRedo aria-hidden="true" />
@@ -528,13 +570,13 @@ const MarketButton = () => {
             </div>
 
             <form className="market-button__add-form" onSubmit={addTicker}>
-              <label htmlFor="market-button-ticker">Add ticker</label>
+              <label htmlFor="market-button-ticker">Add ticker&nbsp;<kbd>/</kbd></label>
               <div>
                 <input
                   id="market-button-ticker"
                   name="ticker"
                   value={tickerInput}
-                  onChange={(event) => setTickerInput(normalizeTicker(event.target.value))}
+                  onChange={(e) => setTickerInput(normalizeTicker(e.target.value))}
                   placeholder="NVDA"
                   autoComplete="off"
                   inputMode="text"
@@ -549,9 +591,7 @@ const MarketButton = () => {
             <div className="market-button__ticker-list">
               {watchlist.map((ticker) => (
                 <div
-                  className={`market-button__ticker ${ticker === selectedTicker ? "is-active" : ""} ${
-                    newsAlert?.ticker === ticker ? "is-flashing" : ""
-                  }`}
+                  className={`market-button__ticker${ticker === selectedTicker ? " is-active" : ""}${newsAlert?.ticker === ticker ? " is-flashing" : ""}`}
                   key={ticker}
                 >
                   <button
@@ -561,13 +601,14 @@ const MarketButton = () => {
                     aria-pressed={ticker === selectedTicker}
                   >
                     <span>{ticker}</span>
-                    <small>{ticker === selectedTicker ? "Viewing" : "Tap to view"}</small>
+                    <small>{ticker === selectedTicker ? "Viewing" : "Select"}</small>
                   </button>
                   <button
                     className="market-button__remove"
                     type="button"
                     onClick={() => removeTicker(ticker)}
                     aria-label={`Remove ${ticker}`}
+                    title={`Remove ${ticker}`}
                     disabled={watchlist.length === 1}
                   >
                     <FaTrash aria-hidden="true" />
@@ -580,7 +621,12 @@ const MarketButton = () => {
               <span>Index pulse</span>
               <div>
                 {INDEX_SHORTCUTS.map((ticker) => (
-                  <button type="button" key={ticker} onClick={() => viewShortcut(ticker)}>
+                  <button
+                    type="button"
+                    key={ticker}
+                    onClick={() => viewShortcut(ticker)}
+                    title={`View ${ticker}`}
+                  >
                     {ticker}
                   </button>
                 ))}
@@ -598,6 +644,7 @@ const MarketButton = () => {
                     onClick={() => viewMarketIndex(index.ticker)}
                     data-testid={`market-index-${index.ticker}`}
                     aria-pressed={selectedTicker === index.ticker}
+                    title={index.name}
                   >
                     <strong>{index.label}</strong>
                     <small>{index.name}</small>
@@ -605,6 +652,10 @@ const MarketButton = () => {
                 ))}
               </div>
             </div>
+
+            <p className="market-button__kbd-hint" aria-hidden="true">
+              <kbd>R</kbd> refresh &nbsp;·&nbsp; <kbd>/</kbd> add ticker &nbsp;·&nbsp; <kbd>Esc</kbd> close
+            </p>
           </aside>
 
           <section
@@ -692,6 +743,7 @@ const MarketButton = () => {
                   target="_blank"
                   rel="noreferrer"
                   key={type}
+                  title={`${label} for ${selectedTicker}`}
                   data-testid={`market-action-${type}`}
                 >
                   <Icon aria-hidden="true" />
@@ -742,13 +794,19 @@ const MarketButton = () => {
       </section>
 
       {newsAlert ? (
-        <div className="market-button__comic-backdrop" role="dialog" aria-modal="true">
+        <div
+          className="market-button__comic-backdrop"
+          role="dialog"
+          aria-modal="true"
+          onClick={(e) => e.target === e.currentTarget && dismissNewsAlert()}
+        >
           <article className="market-button__comic-card">
             <button
               className="market-button__comic-close"
               type="button"
-              onClick={() => setNewsAlert(null)}
+              onClick={dismissNewsAlert}
               aria-label="Close news alert"
+              title="Close (Esc)"
             >
               <FaTimes aria-hidden="true" />
             </button>

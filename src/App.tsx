@@ -120,7 +120,7 @@ const AnimatedRoutes = () => {
             }
           />
           <Route
-            path="/market-button"
+            path="/sonnysafe"
             element={
               <Suspense fallback={<PageLoader />}>
                 <MarketButton />
@@ -143,7 +143,7 @@ const AnimatedRoutes = () => {
 
 const AppChrome = () => {
   const location = useLocation();
-  const isStandalonePage = location.pathname.startsWith("/market-button");
+  const isStandalonePage = location.pathname.startsWith("/sonnysafe");
 
   return (
     <>
