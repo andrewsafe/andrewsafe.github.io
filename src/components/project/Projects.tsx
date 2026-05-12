@@ -43,7 +43,7 @@ interface Project {
 const projects: Project[] = [
   {
     id: 14,
-    image: IMG12,
+    image: IMG3,
     title: "Otto — Enterprise AI Developer Agent",
     category: "AI Engineering / Enterprise",
     description:
