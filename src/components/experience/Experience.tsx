@@ -12,15 +12,19 @@ import {
   SiGooglecloud,
   SiOracle,
   SiDatabricks,
+  SiGithub,
   SiReact,
   SiAngular,
   SiHtml5,
   SiCss3,
   SiJavascript,
+  SiTypescript,
   SiPython,
   SiNodedotjs,
   SiPostgresql,
   SiApachemaven,
+  SiDocker,
+  SiFastapi,
 } from "react-icons/si";
 import { FaMicrosoft, FaJava, FaDatabase, FaCog } from "react-icons/fa";
 
@@ -37,6 +41,7 @@ type Skill = { Icon: ComponentType<{ className?: string }>; name: string; level:
 const aiCloudSkills: Skill[] = [
   { Icon: SiAnthropic, name: "Claude", level: "Expert" },
   { Icon: SiOpenai, name: "ChatGPT", level: "Expert" },
+  { Icon: SiGithub, name: "GitHub Copilot", level: "Expert" },
   { Icon: SiGooglegemini, name: "Gemini", level: "Experienced" },
   { Icon: SiAmazonwebservices, name: "AWS", level: "Expert" },
   { Icon: FaMicrosoft, name: "Azure", level: "Experienced" },
@@ -47,6 +52,7 @@ const aiCloudSkills: Skill[] = [
 
 const frontendSkills: Skill[] = [
   { Icon: SiReact, name: "React", level: "Expert" },
+  { Icon: SiTypescript, name: "TypeScript", level: "Expert" },
   { Icon: SiAngular, name: "Angular", level: "Expert" },
   { Icon: FaCog, name: "ServiceNow", level: "Expert" },
   { Icon: SiHtml5, name: "HTML", level: "Expert" },
@@ -58,7 +64,9 @@ const backendSkills: Skill[] = [
   { Icon: FaJava, name: "Java", level: "Expert" },
   { Icon: SiApachemaven, name: "Maven", level: "Expert" },
   { Icon: SiPython, name: "Python", level: "Experienced" },
+  { Icon: SiFastapi, name: "FastAPI", level: "Experienced" },
   { Icon: SiNodedotjs, name: "Node.js", level: "Experienced" },
+  { Icon: SiDocker, name: "Docker", level: "Experienced" },
   { Icon: FaDatabase, name: "SQL", level: "Expert" },
   { Icon: SiPostgresql, name: "PostgreSQL", level: "Expert" },
 ];
