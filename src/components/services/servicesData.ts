@@ -9,7 +9,7 @@ import {
   SiPostgresql,
   SiDocker,
   SiGitlab,
-  SiSonarqubeserverserver,
+  SiSonarqubeserver,
   SiSelenium,
   SiTerraform,
   SiVscodium,
