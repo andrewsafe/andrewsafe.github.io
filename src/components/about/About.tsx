@@ -2,7 +2,14 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import "./about.css";
 import Me from "../../assets/me.webp";
-import { FaAward, FaCertificate, FaFolder } from "react-icons/fa";
+import {
+  FaAward,
+  FaCertificate,
+  FaFolder,
+  FaRocket,
+  FaShieldAlt,
+  FaTachometerAlt,
+} from "react-icons/fa";
 import AnimatedSection from "../animated-section/AnimatedSection";
 import MagneticButton from "../magnetic-button/MagneticButton";
 import BlurImage from "../blur-image/BlurImage";
@@ -76,6 +83,24 @@ const WordReveal = ({ text }: { text: string }) => {
   );
 };
 
+const careerHighlights = [
+  {
+    Icon: FaRocket,
+    metric: "0 to 1",
+    label: "Treasury onboarding platform",
+  },
+  {
+    Icon: FaTachometerAlt,
+    metric: "4x",
+    label: "PDF batch throughput",
+  },
+  {
+    Icon: FaShieldAlt,
+    metric: "17",
+    label: "Critical issues caught pre-prod",
+  },
+];
+
 const About = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
   const lowPerf = useIsLowPerformance();
@@ -107,7 +132,9 @@ const About = () => {
             <span className={done ? "hero_name--gradient" : ""}>{displayed}</span>
             <span className={`hero_caret ${done ? "blink" : ""}`}>|</span>
           </h1>
-          <p className="hero_subtitle text-light">Full-Stack Software Engineer</p>
+          <p className="hero_subtitle text-light">
+            Full-Stack Software Engineer | Enterprise Apps & AI
+          </p>
         </HeroTag>
       </div>
 
@@ -151,6 +178,15 @@ const About = () => {
               </a>
             </div>
             <WordReveal text="Software engineer at JPMorganChase building enterprise AI systems and full-stack platforms. Architected Otto, an agentic AI coding pipeline that ingests Jira tickets, generates code via Amazon Bedrock (Claude, Codex, GPT-4, Gemini), and ships production-ready pull requests. Delivered AI adoption to 25 teams in 24 hours. Deep learning research: extended Monodepth2 with per-pixel uncertainty for specular surface depth estimation. Running local 26B MoE inference on RTX 5080 via Docker and Ollama. AWS Solutions Architect Associate candidate." />
+            <div className="career_highlights" aria-label="Career highlights">
+              {careerHighlights.map(({ Icon, metric, label }) => (
+                <article className="career_highlight" key={label}>
+                  <Icon className="career_highlight-icon" />
+                  <strong>{metric}</strong>
+                  <span>{label}</span>
+                </article>
+              ))}
+            </div>
             <div className="about_ctas">
               <MagneticButton>
                 <a href="#project" className="btn btn-primary">

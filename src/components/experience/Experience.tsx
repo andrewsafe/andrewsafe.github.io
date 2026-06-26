@@ -8,15 +8,13 @@ import {
   SiAnthropic,
   SiOpenai,
   SiGooglegemini,
-  SiAmazonwebservices,
   SiGooglecloud,
-  SiOracle,
   SiDatabricks,
   SiGithub,
   SiReact,
   SiAngular,
   SiHtml5,
-  SiCss3,
+  SiCss,
   SiJavascript,
   SiTypescript,
   SiPython,
@@ -26,7 +24,7 @@ import {
   SiDocker,
   SiFastapi,
 } from "react-icons/si";
-import { FaMicrosoft, FaJava, FaDatabase, FaCog } from "react-icons/fa";
+import { FaMicrosoft, FaJava, FaDatabase, FaCog, FaAmazon } from "react-icons/fa";
 
 type Level = "Expert" | "Experienced" | "Proficient";
 
@@ -43,10 +41,10 @@ const aiCloudSkills: Skill[] = [
   { Icon: SiOpenai, name: "ChatGPT", level: "Expert" },
   { Icon: SiGithub, name: "GitHub Copilot", level: "Expert" },
   { Icon: SiGooglegemini, name: "Gemini", level: "Experienced" },
-  { Icon: SiAmazonwebservices, name: "AWS", level: "Expert" },
+  { Icon: FaAmazon, name: "AWS", level: "Expert" },
   { Icon: FaMicrosoft, name: "Azure", level: "Experienced" },
   { Icon: SiGooglecloud, name: "GCP", level: "Experienced" },
-  { Icon: SiOracle, name: "Oracle", level: "Experienced" },
+  { Icon: FaDatabase, name: "Oracle", level: "Experienced" },
   { Icon: SiDatabricks, name: "Databricks", level: "Experienced" },
 ];
 
@@ -56,7 +54,7 @@ const frontendSkills: Skill[] = [
   { Icon: SiAngular, name: "Angular", level: "Expert" },
   { Icon: FaCog, name: "ServiceNow", level: "Expert" },
   { Icon: SiHtml5, name: "HTML", level: "Expert" },
-  { Icon: SiCss3, name: "CSS", level: "Expert" },
+  { Icon: SiCss, name: "CSS", level: "Expert" },
   { Icon: SiJavascript, name: "JavaScript", level: "Expert" },
 ];
 

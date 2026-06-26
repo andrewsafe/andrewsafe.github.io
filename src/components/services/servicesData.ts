@@ -1,5 +1,5 @@
 import { IconType } from "react-icons";
-import { FaBuilding, FaFlask, FaServer, FaJava, FaCode, FaRocket, FaBrain } from "react-icons/fa";
+import { FaBuilding, FaFlask, FaServer, FaJava, FaCode, FaRocket, FaBrain, FaAmazon } from "react-icons/fa";
 import {
   SiReact,
   SiAngular,
@@ -7,10 +7,9 @@ import {
   SiPython,
   SiNodedotjs,
   SiPostgresql,
-  SiAmazonwebservices,
   SiDocker,
   SiGitlab,
-  SiSonarqube,
+  SiSonarqubeserverserver,
   SiSelenium,
   SiTerraform,
   SiVscodium,
@@ -86,7 +85,11 @@ export const tabs: TabData[] = [
         linkedCardId: "ent-throughput",
       },
       { year: "2025", text: "OAuth 2.0 + PKCE SSO Integration", linkedCardId: "ent-throughput" },
-      { year: "2026", text: "Joined JPMC: Full-Stack Engineering", linkedCardId: "ent-tech" },
+      {
+        year: "2026",
+        text: "Joined JPMorganChase as Software Engineer II",
+        linkedCardId: "ent-tech",
+      },
     ],
     bento: [
       {
@@ -107,7 +110,7 @@ export const tabs: TabData[] = [
           { icon: SiAngular, name: "Angular" },
           { icon: FaJava, name: "Java" },
           { icon: SiNodedotjs, name: "Spring Boot" },
-          { icon: SiAmazonwebservices, name: "AWS Aurora" },
+          { icon: FaAmazon, name: "AWS Aurora" },
         ],
       },
     ],
@@ -187,9 +190,9 @@ export const tabs: TabData[] = [
         size: "sm",
         icons: [
           { icon: SiDocker, name: "Docker" },
-          { icon: SiAmazonwebservices, name: "AWS" },
+          { icon: FaAmazon, name: "AWS" },
           { icon: SiGitlab, name: "GitLab" },
-          { icon: SiSonarqube, name: "SonarQube" },
+          { icon: SiSonarqubeserver, name: "SonarQube" },
           { icon: SiSelenium, name: "Selenium" },
           { icon: SiTerraform, name: "Terraform" },
         ],
