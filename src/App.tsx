@@ -9,6 +9,7 @@ import Projects from "./components/project/Projects";
 import Kaggle from "./components/kaggle/Kaggle";
 import LocalAI from "./components/local-ai/LocalAI";
 import Testimonials from "./components/testimonials/Testimonials";
+import MarketPulse from "./components/market-pulse/MarketPulse";
 import Contact from "./components/contact/Contact";
 import Footer from "./components/footer/Footer";
 import Resume from "./components/resume/Resume";
@@ -80,6 +81,7 @@ const Home = () => (
     <Experience />
     <Services />
     <Testimonials />
+    <MarketPulse />
     <Contact />
     <Footer />
   </>
