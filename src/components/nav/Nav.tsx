@@ -16,13 +16,13 @@ import useWindowScroll from "../../hooks/useWindowScroll";
 
 const sectionIds = [
   "about",
+  "doctorate",
   "local-ai",
   "kaggle",
   "project",
   "experience",
   "services",
   "ai-ml-ops",
-  "doctorate",
   "contact",
 ];
 
@@ -54,47 +54,79 @@ const Nav = () => {
   return (
     <nav className={visible ? "nav--visible" : ""}>
       <MagneticButton>
-        <a href="#about" className={activeSection === "about" ? "active" : ""}>
+        <a href="#about" className={activeSection === "about" ? "active" : ""} aria-label="About">
           <FaHome />
         </a>
       </MagneticButton>
       <MagneticButton>
-        <a href="#local-ai" className={activeSection === "local-ai" ? "active" : ""}>
-          <FaRobot />
-        </a>
-      </MagneticButton>
-      <MagneticButton>
-        <a href="#kaggle" className={activeSection === "kaggle" ? "active" : ""}>
-          <SiKaggle />
-        </a>
-      </MagneticButton>
-      <MagneticButton>
-        <a href="#project" className={activeSection === "project" ? "active" : ""}>
-          <FaProjectDiagram />
-        </a>
-      </MagneticButton>
-      <MagneticButton>
-        <a href="#experience" className={activeSection === "experience" ? "active" : ""}>
-          <FaBook />
-        </a>
-      </MagneticButton>
-      <MagneticButton>
-        <a href="#services" className={activeSection === "services" ? "active" : ""}>
-          <FaWrench />
-        </a>
-      </MagneticButton>
-      <MagneticButton>
-        <a href="#ai-ml-ops" className={activeSection === "ai-ml-ops" ? "active" : ""}>
-          <FaBrain />
-        </a>
-      </MagneticButton>
-      <MagneticButton>
-        <a href="#doctorate" className={activeSection === "doctorate" ? "active" : ""}>
+        <a
+          href="#doctorate"
+          className={activeSection === "doctorate" ? "active" : ""}
+          aria-label="Doctorate"
+        >
           <FaGraduationCap />
         </a>
       </MagneticButton>
       <MagneticButton>
-        <a href="#contact" className={activeSection === "contact" ? "active" : ""}>
+        <a
+          href="#local-ai"
+          className={activeSection === "local-ai" ? "active" : ""}
+          aria-label="Local AI"
+        >
+          <FaRobot />
+        </a>
+      </MagneticButton>
+      <MagneticButton>
+        <a
+          href="#kaggle"
+          className={activeSection === "kaggle" ? "active" : ""}
+          aria-label="Kaggle"
+        >
+          <SiKaggle />
+        </a>
+      </MagneticButton>
+      <MagneticButton>
+        <a
+          href="#project"
+          className={activeSection === "project" ? "active" : ""}
+          aria-label="Projects"
+        >
+          <FaProjectDiagram />
+        </a>
+      </MagneticButton>
+      <MagneticButton>
+        <a
+          href="#experience"
+          className={activeSection === "experience" ? "active" : ""}
+          aria-label="Experience"
+        >
+          <FaBook />
+        </a>
+      </MagneticButton>
+      <MagneticButton>
+        <a
+          href="#services"
+          className={activeSection === "services" ? "active" : ""}
+          aria-label="Services"
+        >
+          <FaWrench />
+        </a>
+      </MagneticButton>
+      <MagneticButton>
+        <a
+          href="#ai-ml-ops"
+          className={activeSection === "ai-ml-ops" ? "active" : ""}
+          aria-label="AI/ML Ops"
+        >
+          <FaBrain />
+        </a>
+      </MagneticButton>
+      <MagneticButton>
+        <a
+          href="#contact"
+          className={activeSection === "contact" ? "active" : ""}
+          aria-label="Contact"
+        >
           <MdContactMail />
         </a>
       </MagneticButton>

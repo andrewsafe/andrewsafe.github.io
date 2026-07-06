@@ -1,5 +1,14 @@
 import { IconType } from "react-icons";
-import { FaBuilding, FaFlask, FaServer, FaJava, FaCode, FaRocket, FaBrain, FaAmazon } from "react-icons/fa";
+import {
+  FaBuilding,
+  FaFlask,
+  FaServer,
+  FaJava,
+  FaCode,
+  FaRocket,
+  FaBrain,
+  FaAmazon,
+} from "react-icons/fa";
 import {
   SiReact,
   SiAngular,

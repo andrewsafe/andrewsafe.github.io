@@ -104,8 +104,7 @@ const toTradingViewSymbol = (ticker: string) => {
   return `NASDAQ:${ticker}`;
 };
 
-const isMarketIndexTicker = (ticker: string) =>
-  MARKET_INDEXES.some((idx) => idx.ticker === ticker);
+const isMarketIndexTicker = (ticker: string) => MARKET_INDEXES.some((idx) => idx.ticker === ticker);
 
 const buildGoogleUrl = (ticker: string, searchType: SearchType | MarketAction["type"]) => {
   const queries: Record<string, string> = {
@@ -310,7 +309,9 @@ const MarketButton = () => {
       if (Array.isArray(parsed) && parsed.length > 0) {
         return normalizeTicker(String(parsed[0])) || DEFAULT_WATCHLIST[0];
       }
-    } catch { /* ignore */ }
+    } catch {
+      /* ignore */
+    }
     return DEFAULT_WATCHLIST[0];
   });
 
@@ -570,7 +571,9 @@ const MarketButton = () => {
             </div>
 
             <form className="market-button__add-form" onSubmit={addTicker}>
-              <label htmlFor="market-button-ticker">Add ticker&nbsp;<kbd>/</kbd></label>
+              <label htmlFor="market-button-ticker">
+                Add ticker&nbsp;<kbd>/</kbd>
+              </label>
               <div>
                 <input
                   id="market-button-ticker"
@@ -654,7 +657,8 @@ const MarketButton = () => {
             </div>
 
             <p className="market-button__kbd-hint" aria-hidden="true">
-              <kbd>R</kbd> refresh &nbsp;·&nbsp; <kbd>/</kbd> add ticker &nbsp;·&nbsp; <kbd>Esc</kbd> close
+              <kbd>R</kbd> refresh &nbsp;·&nbsp; <kbd>/</kbd> add ticker &nbsp;·&nbsp;{" "}
+              <kbd>Esc</kbd> close
             </p>
           </aside>
 

@@ -42,31 +42,31 @@ const AiMlOps = () => {
         <div className="container aiops_container">
           <div className="aiops_body">
             <p>
-              Beyond shipping individual AI features, most of my recent work has been about how
-              an entire engineering organization adopts AI safely and effectively. That means
+              Beyond shipping individual AI features, most of my recent work has been about how an
+              entire engineering organization adopts AI safely and effectively. That means
               evaluating which models and reasoning strategies actually fit a given workflow,
               designing context and prompting patterns that hold up under enterprise compliance
-              requirements, and packaging the results into reusable, versioned skills that any
-              team can pick up without reinventing the process.
+              requirements, and packaging the results into reusable, versioned skills that any team
+              can pick up without reinventing the process.
             </p>
             <p>
               I built and rolled out an agentic AI pipeline that turns a Jira ticket into a
               production-ready pull request, routing each task to the right model across Amazon
-              Bedrock and enforcing every team's own architectural and security standards through
-              a persistent, self-improving instructions file. I've also contributed key mobile
+              Bedrock and enforcing every team's own architectural and security standards through a
+              persistent, self-improving instructions file. I've also contributed key mobile
               experiences for manager and advisor workflows and solution overview enhancements on
               JPMorganChase's iPerform platform, while supporting platform reliability and
-              observability work such as Dynatrace instrumentation to keep those systems
-              production ready.
+              observability work such as Dynatrace instrumentation to keep those systems production
+              ready.
             </p>
             <p>
               Just as much of the work has been teaching it. I've led hands-on AI skill-building
-              sessions for engineers at every level, walking through practical techniques for
-              model selection, reasoning strategies, and context design so teams can apply AI to
-              their own work with confidence instead of guesswork. Shipping real AI systems while
-              also teaching the organization how to use them well was recognized company-wide,
-              including a shoutout during a recent leadership town hall for driving AI adoption
-              across the org.
+              sessions for engineers at every level, walking through practical techniques for model
+              selection, reasoning strategies, and context design so teams can apply AI to their own
+              work with confidence instead of guesswork. Shipping real AI systems while also
+              teaching the organization how to use them well was recognized company-wide, including
+              a shoutout during a recent leadership town hall for driving AI adoption across the
+              org.
             </p>
             <div className="aiops_tags">
               {tools.map((tool) => (

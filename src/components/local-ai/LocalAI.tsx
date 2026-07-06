@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import useModalLock from "../../hooks/useModalLock";
-import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import "./local-ai.css";
 import AnimatedSection from "../animated-section/AnimatedSection";
 import ScrambleText from "../scramble-text/ScrambleText";
 import { useIsLowPerformance } from "../../hooks/usePerformanceTier";
 import useIsMobile from "../../hooks/useIsMobile";
+import useStickyPanelScroll from "../../hooks/useStickyPanelScroll";
 
 interface LAIExpandedContent {
   overview: string;
@@ -363,83 +364,10 @@ const LAIEntryPanel = ({
 
 // ── Sticky scroll showcase ────────────────────────────────────────────────────
 const TOTAL_PANELS = entries.length + 1;
-const STEP_MS = 500;
 
 const LAIShowcase = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
   const [expandedEntry, setExpandedEntry] = useState<LAIEntry | null>(null);
-  const outerRef = useRef<HTMLDivElement>(null);
-
-  const activeIndexRef = useRef(0);
-  const targetIndexRef = useRef(0);
-  const stepTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const suppressRef = useRef(false);
-
-  const { scrollYProgress } = useScroll({
-    target: outerRef,
-    offset: ["start start", "end end"],
-  });
-
-  const stepRef = useRef<() => void>(() => {});
-  stepRef.current = () => {
-    stepTimerRef.current = null;
-    const current = activeIndexRef.current;
-    const target = targetIndexRef.current;
-    if (current === target) return;
-
-    if (outerRef.current) {
-      const rect = outerRef.current.getBoundingClientRect();
-      if (rect.bottom <= 0 || rect.top >= window.innerHeight) {
-        activeIndexRef.current = target;
-        setActiveIndex(target);
-        return;
-      }
-    }
-
-    const next = current < target ? current + 1 : current - 1;
-    activeIndexRef.current = next;
-    setActiveIndex(next);
-
-    if (next !== target) {
-      stepTimerRef.current = setTimeout(() => stepRef.current(), STEP_MS);
-    }
-  };
-
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    if (suppressRef.current) return;
-    const idx = Math.min(Math.floor(v * TOTAL_PANELS), TOTAL_PANELS - 1);
-    targetIndexRef.current = idx;
-    if (stepTimerRef.current === null && activeIndexRef.current !== idx) {
-      stepRef.current();
-    }
-  });
-
-  useEffect(() => {
-    return () => {
-      if (stepTimerRef.current) clearTimeout(stepTimerRef.current);
-    };
-  }, []);
-
-  const scrollToPanel = (i: number) => {
-    if (!outerRef.current) return;
-    if (stepTimerRef.current) {
-      clearTimeout(stepTimerRef.current);
-      stepTimerRef.current = null;
-    }
-    targetIndexRef.current = i;
-    activeIndexRef.current = i;
-    setActiveIndex(i);
-
-    suppressRef.current = true;
-    const rect = outerRef.current.getBoundingClientRect();
-    const totalHeight = outerRef.current.offsetHeight - window.innerHeight;
-    const targetScroll =
-      window.scrollY + rect.top + (i / TOTAL_PANELS) * totalHeight + totalHeight / TOTAL_PANELS / 2;
-    window.scrollTo({ top: targetScroll, behavior: "smooth" });
-    setTimeout(() => {
-      suppressRef.current = false;
-    }, 800);
-  };
+  const { activeIndex, outerRef, scrollToPanel } = useStickyPanelScroll(TOTAL_PANELS);
 
   return (
     <section id="local-ai">

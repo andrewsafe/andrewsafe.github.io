@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import useModalLock from "../../hooks/useModalLock";
-import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import "./kaggle.css";
 import TiltCard from "../tilt-card/TiltCard";
 import { useIsLowPerformance } from "../../hooks/usePerformanceTier";
 import useIsMobile from "../../hooks/useIsMobile";
+import useStickyPanelScroll from "../../hooks/useStickyPanelScroll";
 
 const KAGGLE_PROFILE_URL = "https://www.kaggle.com/andrewsafe";
 
@@ -708,90 +709,10 @@ const KagglePanel = ({
 
 // ── Sticky scroll showcase ─────────────────────────────────────────────────
 const TOTAL_PANELS = competitions.length + 1; // 1 intro + 10 competitions
-const STEP_MS = 500; // ms between sequential panel steps (matches enter animation)
 
 const KaggleShowcase = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
   const [expandedComp, setExpandedComp] = useState<KaggleCompetition | null>(null);
-  const outerRef = useRef<HTMLDivElement>(null);
-
-  // Refs so the step closure always reads the latest values
-  const activeIndexRef = useRef(0);
-  const targetIndexRef = useRef(0);
-  const stepTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const suppressRef = useRef(false); // ignore scroll events during dot-click smooth scroll
-
-  const { scrollYProgress } = useScroll({
-    target: outerRef,
-    offset: ["start start", "end end"],
-  });
-
-  // stepRef holds the latest version of the step function to avoid stale closures
-  const stepRef = useRef<() => void>(() => {});
-  stepRef.current = () => {
-    stepTimerRef.current = null;
-    const current = activeIndexRef.current;
-    const target = targetIndexRef.current;
-    if (current === target) return;
-
-    // If the section has scrolled out of view, snap immediately and stop
-    if (outerRef.current) {
-      const rect = outerRef.current.getBoundingClientRect();
-      if (rect.bottom <= 0 || rect.top >= window.innerHeight) {
-        activeIndexRef.current = target;
-        setActiveIndex(target);
-        return;
-      }
-    }
-
-    const next = current < target ? current + 1 : current - 1;
-    activeIndexRef.current = next;
-    setActiveIndex(next);
-
-    if (next !== target) {
-      stepTimerRef.current = setTimeout(() => stepRef.current(), STEP_MS);
-    }
-  };
-
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    if (suppressRef.current) return;
-    const idx = Math.min(Math.floor(v * TOTAL_PANELS), TOTAL_PANELS - 1);
-    targetIndexRef.current = idx;
-    // Only start a new step sequence if none is running
-    if (stepTimerRef.current === null && activeIndexRef.current !== idx) {
-      stepRef.current();
-    }
-  });
-
-  useEffect(() => {
-    return () => {
-      if (stepTimerRef.current) clearTimeout(stepTimerRef.current);
-    };
-  }, []);
-
-  const scrollToPanel = (i: number) => {
-    if (!outerRef.current) return;
-
-    // Cancel any ongoing sequential stepping and jump directly
-    if (stepTimerRef.current) {
-      clearTimeout(stepTimerRef.current);
-      stepTimerRef.current = null;
-    }
-    targetIndexRef.current = i;
-    activeIndexRef.current = i;
-    setActiveIndex(i);
-
-    // Suppress scroll-driven updates while smooth scroll is in flight
-    suppressRef.current = true;
-    const rect = outerRef.current.getBoundingClientRect();
-    const totalHeight = outerRef.current.offsetHeight - window.innerHeight;
-    const targetScroll =
-      window.scrollY + rect.top + (i / TOTAL_PANELS) * totalHeight + totalHeight / TOTAL_PANELS / 2;
-    window.scrollTo({ top: targetScroll, behavior: "smooth" });
-    setTimeout(() => {
-      suppressRef.current = false;
-    }, 800);
-  };
+  const { activeIndex, outerRef, scrollToPanel } = useStickyPanelScroll(TOTAL_PANELS);
 
   return (
     <section id="kaggle">

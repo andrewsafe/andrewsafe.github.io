@@ -11,14 +11,10 @@ import Projects from "./components/project/Projects";
 import Kaggle from "./components/kaggle/Kaggle";
 import LocalAI from "./components/local-ai/LocalAI";
 import Testimonials from "./components/testimonials/Testimonials";
-import MarketPulse from "./components/market-pulse/MarketPulse";
 import Contact from "./components/contact/Contact";
 import Footer from "./components/footer/Footer";
-import Resume from "./components/resume/Resume";
-import Certifications from "./components/certifications/Certifications";
 import CursorGlow from "./components/cursor-glow/CursorGlow";
 import BackToTop from "./components/back-to-top/BackToTop";
-import NotFound from "./components/not-found/NotFound";
 import CommandPalette from "./components/command-palette/CommandPalette";
 import EasterEgg from "./components/easter-egg/EasterEgg";
 import NoiseOverlay from "./components/noise-overlay/NoiseOverlay";
@@ -26,6 +22,9 @@ import useDynamicFavicon from "./hooks/useDynamicFavicon";
 import usePerformanceTier from "./hooks/usePerformanceTier";
 
 const MarketButton = lazy(() => import("./components/market-button/MarketButton"));
+const Resume = lazy(() => import("./components/resume/Resume"));
+const Certifications = lazy(() => import("./components/certifications/Certifications"));
+const NotFound = lazy(() => import("./components/not-found/NotFound"));
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -76,6 +75,7 @@ const Home = () => (
   <>
     <ScrollProgress />
     <About />
+    <Doctorate />
     <LocalAI />
     <Kaggle />
     <Projects />
@@ -83,9 +83,7 @@ const Home = () => (
     <Experience />
     <Services />
     <AiMlOps />
-    <Doctorate />
     <Testimonials />
-    <MarketPulse />
     <Contact />
     <Footer />
   </>
@@ -113,7 +111,9 @@ const AnimatedRoutes = () => {
             path="/resume"
             element={
               <motion.div {...pageTransition}>
-                <Resume />
+                <Suspense fallback={<PageLoader />}>
+                  <Resume />
+                </Suspense>
               </motion.div>
             }
           />
@@ -121,7 +121,9 @@ const AnimatedRoutes = () => {
             path="/certifications"
             element={
               <motion.div {...pageTransition}>
-                <Certifications />
+                <Suspense fallback={<PageLoader />}>
+                  <Certifications />
+                </Suspense>
               </motion.div>
             }
           />
@@ -137,7 +139,9 @@ const AnimatedRoutes = () => {
             path="*"
             element={
               <motion.div {...pageTransition}>
-                <NotFound />
+                <Suspense fallback={<PageLoader />}>
+                  <NotFound />
+                </Suspense>
               </motion.div>
             }
           />

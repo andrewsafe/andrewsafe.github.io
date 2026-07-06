@@ -112,11 +112,7 @@ const About = () => {
         ) : (
           <motion.div
             className="hero"
-            style={
-              isMobile
-                ? { opacity: heroOpacity }
-                : { opacity: heroOpacity, scale: heroScale }
-            }
+            style={isMobile ? { opacity: heroOpacity } : { opacity: heroOpacity, scale: heroScale }}
           >
             {heroContent}
           </motion.div>
