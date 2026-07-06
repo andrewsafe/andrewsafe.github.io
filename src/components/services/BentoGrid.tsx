@@ -15,7 +15,7 @@ const MetricCard = ({ value, label }: { value: string; label: string }) => {
   const numericPart = numericMatch ? parseInt(numericMatch[1], 10) : 0;
   const textPart = numericMatch ? value.slice(numericMatch[1].length) : value;
 
-  const { ref, display } = useCountingAnimation(numericPart, reducedMotion);
+  const { ref, display } = useCountingAnimation<HTMLDivElement>(numericPart, reducedMotion);
 
   return (
     <div ref={ref} className="bento-metric">

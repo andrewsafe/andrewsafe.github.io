@@ -6,7 +6,6 @@ import ScrambleText from "../scramble-text/ScrambleText";
 import { useIsLowPerformance } from "../../hooks/usePerformanceTier";
 import {
   SiAnthropic,
-  SiOpenai,
   SiGooglegemini,
   SiGooglecloud,
   SiDatabricks,
@@ -25,6 +24,7 @@ import {
   SiFastapi,
 } from "react-icons/si";
 import { FaMicrosoft, FaJava, FaDatabase, FaCog, FaAmazon } from "react-icons/fa";
+import { TbBrandOpenai } from "react-icons/tb";
 
 type Level = "Expert" | "Experienced" | "Proficient";
 
@@ -38,7 +38,7 @@ type Skill = { Icon: ComponentType<{ className?: string }>; name: string; level:
 
 const aiCloudSkills: Skill[] = [
   { Icon: SiAnthropic, name: "Claude", level: "Expert" },
-  { Icon: SiOpenai, name: "ChatGPT", level: "Expert" },
+  { Icon: TbBrandOpenai, name: "ChatGPT", level: "Expert" },
   { Icon: SiGithub, name: "GitHub Copilot", level: "Expert" },
   { Icon: SiGooglegemini, name: "Gemini", level: "Experienced" },
   { Icon: FaAmazon, name: "AWS", level: "Expert" },

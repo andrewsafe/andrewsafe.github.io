@@ -5,6 +5,8 @@ import Nav from "./components/nav/Nav";
 import About from "./components/about/About";
 import Experience from "./components/experience/Experience";
 import Services from "./components/services/Services";
+import AiMlOps from "./components/ai-ml-ops/AiMlOps";
+import Doctorate from "./components/doctorate/Doctorate";
 import Projects from "./components/project/Projects";
 import Kaggle from "./components/kaggle/Kaggle";
 import LocalAI from "./components/local-ai/LocalAI";
@@ -80,6 +82,8 @@ const Home = () => (
     <Nav />
     <Experience />
     <Services />
+    <AiMlOps />
+    <Doctorate />
     <Testimonials />
     <MarketPulse />
     <Contact />

@@ -1,12 +1,30 @@
 import { useState, useCallback } from "react";
 import "./nav.css";
-import { FaHome, FaBook, FaProjectDiagram, FaRobot, FaWrench } from "react-icons/fa";
+import {
+  FaHome,
+  FaBook,
+  FaProjectDiagram,
+  FaRobot,
+  FaWrench,
+  FaBrain,
+  FaGraduationCap,
+} from "react-icons/fa";
 import { MdContactMail } from "react-icons/md";
 import { SiKaggle } from "react-icons/si";
 import MagneticButton from "../magnetic-button/MagneticButton";
 import useWindowScroll from "../../hooks/useWindowScroll";
 
-const sectionIds = ["about", "local-ai", "kaggle", "project", "experience", "services", "contact"];
+const sectionIds = [
+  "about",
+  "local-ai",
+  "kaggle",
+  "project",
+  "experience",
+  "services",
+  "ai-ml-ops",
+  "doctorate",
+  "contact",
+];
 
 const Nav = () => {
   const [activeSection, setActiveSection] = useState("about");
@@ -63,6 +81,16 @@ const Nav = () => {
       <MagneticButton>
         <a href="#services" className={activeSection === "services" ? "active" : ""}>
           <FaWrench />
+        </a>
+      </MagneticButton>
+      <MagneticButton>
+        <a href="#ai-ml-ops" className={activeSection === "ai-ml-ops" ? "active" : ""}>
+          <FaBrain />
+        </a>
+      </MagneticButton>
+      <MagneticButton>
+        <a href="#doctorate" className={activeSection === "doctorate" ? "active" : ""}>
+          <FaGraduationCap />
         </a>
       </MagneticButton>
       <MagneticButton>

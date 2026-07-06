@@ -44,7 +44,7 @@ const projects: Project[] = [
   {
     id: 14,
     image: IMG3,
-    title: "Otto — Enterprise AI Developer Agent",
+    title: "Agentic AI Coding Pipeline — Enterprise SDLC Automation",
     category: "AI Engineering / Enterprise",
     description:
       "Internal enterprise AI coding agent at JPMorganChase that ingests Jira tickets, generates repository-aware code via Amazon Bedrock (Claude Sonnet/Opus, GPT-4, Gemini, Codex), and ships production-ready pull requests to Bitbucket — operationalizing AI-assisted SDLC delivery across engineering teams at scale.",
@@ -52,17 +52,17 @@ const projects: Project[] = [
     accentHue: 260,
     expandedContent: {
       overview:
-        "Otto is an internal enterprise AI developer agent platform built at JPMorganChase that connects Jira, Amazon Bedrock, and Bitbucket into a closed-loop autonomous SDLC pipeline. A developer creates a Jira ticket; Otto ingests it, pulls the relevant repository context, selects the best LLM for the task (Claude Sonnet/Opus, OpenAI Codex, GPT-4, or Gemini), generates code changes, and opens a production-ready pull request — all without a human writing a single line. The architecture is model-agnostic by design: any new LLM can be swapped in without changing downstream orchestration logic.",
+        "An internal enterprise AI developer agent platform built at JPMorganChase that connects Jira, Amazon Bedrock, and Bitbucket into a closed-loop autonomous SDLC pipeline. A developer creates a Jira ticket; the agent ingests it, pulls the relevant repository context, selects the best LLM for the task (Claude Sonnet/Opus, OpenAI Codex, GPT-4, or Gemini), generates code changes, and opens a production-ready pull request — all without a human writing a single line. The architecture is model-agnostic by design: any new LLM can be swapped in without changing downstream orchestration logic.",
       approach: [
         "Jira-to-PR pipeline: webhooks capture ticket creation/update events, extract acceptance criteria and linked code context, and route to the appropriate LLM via Amazon Bedrock's unified API — one interface across Claude Sonnet/Opus, OpenAI Codex, GPT-4, and Gemini",
-        "Repository-scoped AI governance: each repository optionally defines a .otto/instructions.md file injected as a persistent system prompt for every generation request — constraining LLM output to the team's architectural patterns, security policies, and coding standards without sacrificing multi-model flexibility",
-        "Self-reinforcing organizational memory: a post-merge hook reads PR reviewer comments and propagates accepted feedback as permanent additions to .otto/instructions.md — each merged PR makes future generations smarter; alignment improves automatically without manual instruction updates",
-        "Human-in-the-loop design: Otto opens PRs for human review rather than auto-merging; the reviewer is the final gate — AppSec compliance is maintained because no AI output reaches production without engineer sign-off",
+        "Repository-scoped AI governance: each repository optionally defines a persistent per-repository instructions file injected as a system prompt for every generation request — constraining LLM output to the team's architectural patterns, security policies, and coding standards without sacrificing multi-model flexibility",
+        "Self-reinforcing organizational memory: a post-merge hook reads PR reviewer comments and propagates accepted feedback as permanent additions to that instructions file — each merged PR makes future generations smarter; alignment improves automatically without manual instruction updates",
+        "Human-in-the-loop design: the agent opens PRs for human review rather than auto-merging; the reviewer is the final gate — AppSec compliance is maintained because no AI output reaches production without engineer sign-off",
         "Multi-model orchestration: task routing selects the model based on task type (Claude for reasoning-heavy refactors, Codex for completion-heavy boilerplate, GPT-4 for cross-file synthesis) — each model runs through Bedrock's unified API so orchestration is model-agnostic",
         "Enterprise AI enablement: delivered AI adoption presentations to 25 teams within 24 hours covering governance frameworks, meta-prompting strategies, and Claude Code/Copilot workflows — onboarded 4 engineering teams in a single day and measurably compressed development velocity across the organization",
       ],
       result:
-        "Otto is in active use across engineering teams at JPMorganChase, operationalizing AI-assisted development at enterprise scale. The persistent instruction injection system achieved AppSec-compliant AI code generation — meeting a compliance requirement that initially seemed at odds with multi-LLM flexibility. The self-reinforcing memory mechanism means the system gets progressively better aligned to each team's engineering standards with zero manual maintenance: reviewer feedback automatically becomes institutional AI knowledge. The platform was presented to 25 teams within 24 hours and has driven measurable compression of development velocity across the organization.",
+        "In active use across engineering teams at JPMorganChase, operationalizing AI-assisted development at enterprise scale. The persistent instruction injection system achieved AppSec-compliant AI code generation — meeting a compliance requirement that initially seemed at odds with multi-LLM flexibility. The self-reinforcing memory mechanism means the system gets progressively better aligned to each team's engineering standards with zero manual maintenance: reviewer feedback automatically becomes institutional AI knowledge. The platform was presented to 25 teams within 24 hours and has driven measurable compression of development velocity across the organization.",
     },
   },
   {

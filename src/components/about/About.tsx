@@ -2,14 +2,7 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import "./about.css";
 import Me from "../../assets/me.webp";
-import {
-  FaAward,
-  FaCertificate,
-  FaFolder,
-  FaRocket,
-  FaShieldAlt,
-  FaTachometerAlt,
-} from "react-icons/fa";
+import { FaAward, FaCertificate, FaFolder, FaBrain, FaGraduationCap } from "react-icons/fa";
 import AnimatedSection from "../animated-section/AnimatedSection";
 import MagneticButton from "../magnetic-button/MagneticButton";
 import BlurImage from "../blur-image/BlurImage";
@@ -83,24 +76,6 @@ const WordReveal = ({ text }: { text: string }) => {
   );
 };
 
-const careerHighlights = [
-  {
-    Icon: FaRocket,
-    metric: "0 to 1",
-    label: "Treasury onboarding platform",
-  },
-  {
-    Icon: FaTachometerAlt,
-    metric: "4x",
-    label: "PDF batch throughput",
-  },
-  {
-    Icon: FaShieldAlt,
-    metric: "17",
-    label: "Critical issues caught pre-prod",
-  },
-];
-
 const About = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
   const lowPerf = useIsLowPerformance();
@@ -116,26 +91,36 @@ const About = () => {
   const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
 
-  const HeroTag = lowPerf ? "div" : motion.div;
-  const heroStyle = lowPerf
-    ? undefined
-    : isMobile
-      ? { opacity: heroOpacity }
-      : { opacity: heroOpacity, scale: heroScale };
+  const heroContent = (
+    <>
+      <h5 className="hero_greeting">Hey I'm</h5>
+      <h1 className="hero_name">
+        <span className={done ? "hero_name--gradient" : ""}>{displayed}</span>
+        <span className={`hero_caret ${done ? "blink" : ""}`}>|</span>
+      </h1>
+      <p className="hero_subtitle text-light">
+        Full-Stack Software Engineer | Enterprise Apps & AI
+      </p>
+    </>
+  );
 
   return (
     <section id="about">
       <div className="hero_wrapper" ref={heroWrapperRef}>
-        <HeroTag className="hero" style={heroStyle}>
-          <h5 className="hero_greeting">Hey I'm</h5>
-          <h1 className="hero_name">
-            <span className={done ? "hero_name--gradient" : ""}>{displayed}</span>
-            <span className={`hero_caret ${done ? "blink" : ""}`}>|</span>
-          </h1>
-          <p className="hero_subtitle text-light">
-            Full-Stack Software Engineer | Enterprise Apps & AI
-          </p>
-        </HeroTag>
+        {lowPerf ? (
+          <div className="hero">{heroContent}</div>
+        ) : (
+          <motion.div
+            className="hero"
+            style={
+              isMobile
+                ? { opacity: heroOpacity }
+                : { opacity: heroOpacity, scale: heroScale }
+            }
+          >
+            {heroContent}
+          </motion.div>
+        )}
       </div>
 
       <AnimatedSection>
@@ -176,17 +161,26 @@ const About = () => {
                 <h5>Projects</h5>
                 <CountingStat target={10} suffix="+" label="projects completed" />
               </a>
+              <a
+                className="about_card about_card--link"
+                href="#ai-ml-ops"
+                aria-label="See my AI/ML Ops work"
+              >
+                <FaBrain className="about_icon" />
+                <h5>AI/ML Ops</h5>
+                <small>Enterprise adoption</small>
+              </a>
+              <a
+                className="about_card about_card--link"
+                href="#doctorate"
+                aria-label="See my doctoral research"
+              >
+                <FaGraduationCap className="about_icon" />
+                <h5>Doctorate</h5>
+                <small>Johns Hopkins</small>
+              </a>
             </div>
-            <WordReveal text="Software engineer at JPMorganChase building enterprise AI systems and full-stack platforms. Architected Otto, an agentic AI coding pipeline that ingests Jira tickets, generates code via Amazon Bedrock (Claude, Codex, GPT-4, Gemini), and ships production-ready pull requests. Delivered AI adoption to 25 teams in 24 hours. Deep learning research: extended Monodepth2 with per-pixel uncertainty for specular surface depth estimation. Running local 26B MoE inference on RTX 5080 via Docker and Ollama. AWS Solutions Architect Associate candidate." />
-            <div className="career_highlights" aria-label="Career highlights">
-              {careerHighlights.map(({ Icon, metric, label }) => (
-                <article className="career_highlight" key={label}>
-                  <Icon className="career_highlight-icon" />
-                  <strong>{metric}</strong>
-                  <span>{label}</span>
-                </article>
-              ))}
-            </div>
+            <WordReveal text="Software engineer at JPMorganChase building enterprise AI systems and full-stack platforms. Deep learning research: extended Monodepth2 with per-pixel uncertainty for specular surface depth estimation. Running local 26B MoE inference on RTX 5080 via Docker and Ollama. AWS Solutions Architect Associate candidate." />
             <div className="about_ctas">
               <MagneticButton>
                 <a href="#project" className="btn btn-primary">

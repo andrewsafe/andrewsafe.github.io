@@ -15,8 +15,8 @@ import {
   SiVscodium,
   SiIntellijidea,
   SiGithubcopilot,
-  SiOpenai,
 } from "react-icons/si";
+import { TbBrandOpenai } from "react-icons/tb";
 
 /* ── Card Types ── */
 export type BentoSize = "sm" | "md" | "lg";
@@ -245,7 +245,7 @@ export const workTools: DevTool[] = [
 export const personalTools: DevTool[] = [
   { icon: FaRocket, name: "Antigravity" },
   { icon: FaBrain, name: "Claude Code" },
-  { icon: SiOpenai, name: "Codex" },
+  { icon: TbBrandOpenai, name: "Codex" },
 ];
 
 /* ── Stat Bar ── */

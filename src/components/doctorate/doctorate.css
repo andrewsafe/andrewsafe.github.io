@@ -1,0 +1,93 @@
+/* ══════════════════════════════════════
+   Doctorate Section
+   ══════════════════════════════════════ */
+
+.doctorate_container {
+  max-width: 860px;
+}
+
+.doctorate_container > p {
+  color: var(--color-white);
+  line-height: 1.75;
+  margin-bottom: 1.6rem;
+}
+
+.doctorate_container > p em {
+  color: var(--color-primary);
+  font-style: italic;
+}
+
+.doctorate_aims {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin: 2.5rem 0 2.5rem;
+}
+
+.doctorate_aim {
+  padding: 1.75rem 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-bg-variant);
+  transition: border-color 0.3s ease;
+}
+
+.doctorate_aim:hover {
+  border-color: rgba(79, 172, 254, 0.3);
+}
+
+.doctorate_aim-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 600;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.doctorate_aim h4 {
+  font-size: 0.95rem;
+  color: var(--color-primary);
+  margin-bottom: 0.6rem;
+}
+
+.doctorate_aim p {
+  font-size: 0.85rem;
+  color: var(--color-light);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ══════════════════════════════════════
+   Light Mode
+   ══════════════════════════════════════ */
+@media (prefers-color-scheme: light) {
+  .doctorate_aim {
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .doctorate_aim:hover {
+    border-color: rgba(37, 99, 235, 0.35);
+  }
+}
+
+/* ══════════════════════════════════════
+   Tablet
+   ══════════════════════════════════════ */
+@media screen and (max-width: 1024px) {
+  .doctorate_aims {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ══════════════════════════════════════
+   Mobile
+   ══════════════════════════════════════ */
+@media screen and (max-width: 600px) {
+  .doctorate_aim {
+    padding: 1.4rem 1.25rem;
+  }
+}

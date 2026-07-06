@@ -15,7 +15,7 @@ const StatItem = ({
   index: number;
 }) => {
   const reducedMotion = usePrefersReducedMotion();
-  const { ref, display } = useCountingAnimation(target, reducedMotion);
+  const { ref, display } = useCountingAnimation<HTMLDivElement>(target, reducedMotion);
 
   return (
     <motion.div

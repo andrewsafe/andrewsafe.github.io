@@ -1,11 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import { useMotionValue, useInView, animate } from "framer-motion";
 
-const useCountingAnimation = (
+const useCountingAnimation = <T extends HTMLElement = HTMLElement>(
   target: number,
   skip = false,
-): { ref: React.RefObject<HTMLElement | null>; display: string } => {
-  const ref = useRef<HTMLElement>(null);
+): { ref: React.RefObject<T | null>; display: string } => {
+  const ref = useRef<T>(null);
   const inView = useInView(ref, { once: true });
   const count = useMotionValue(0);
   const [display, setDisplay] = useState(skip ? target.toString() : "0");

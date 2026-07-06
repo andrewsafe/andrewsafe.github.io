@@ -8,10 +8,13 @@ export default defineConfig({
     outDir: "dist",
     rollupOptions: {
       output: {
-        manualChunks: {
-          "vendor-react": ["react", "react-dom", "react-router-dom"],
-          "vendor-motion": ["framer-motion"],
-          "vendor-icons": ["react-icons"],
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return;
+          if (/[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/.test(id)) {
+            return "vendor-react";
+          }
+          if (id.includes("framer-motion")) return "vendor-motion";
+          if (id.includes("react-icons")) return "vendor-icons";
         },
       },
     },
