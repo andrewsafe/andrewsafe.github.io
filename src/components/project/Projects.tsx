@@ -39,6 +39,7 @@ interface Project {
   techStack: string[];
   accentHue: number;
   paper?: string;
+  repo?: string;
   expandedContent: ProjectExpandedContent;
 }
 
@@ -53,6 +54,7 @@ const projects: Project[] = [
     techStack: ["XGBoost", "K-Means", "FastAPI", "Azure ML", "Python", "Pandas", "MLOps"],
     accentHue: 145,
     paper: "/carbon-aware-mlops-paper.pdf",
+    repo: "https://github.com/andrewsaifnoorian/carbon-aware-mlops",
     expandedContent: {
       overview:
         "AI data centers are projected to push global electricity consumption past 800 TWh by 2028 (IEA, 2025), comparable to a mid-sized country's annual draw. This capstone treats when and where a workload runs as a decision variable rather than a fixed constraint, and operationalizes that decision as a single actionable signal. Three models were trained independently: an XGBoost classifier labeling a forecast window as low- or high-carbon, an XGBoost regressor estimating national data-center capacity growth from AI-adoption indicators, and a K-Means (k=6) clustering step assigning countries to carbon-sustainability archetypes. These are then fused by a Carbon-Opportunity Signal layer into a Green Window Probability and a RUN WORKLOAD / WAIT / ADJUST recommendation, served identically from a local FastAPI process and an Azure ML Managed Online Endpoint.",
@@ -457,11 +459,18 @@ const ProjectDetailModal = ({ project, onClose }: { project: Project; onClose: (
           </div>
         </div>
 
-        {project.paper && (
+        {(project.paper || project.repo) && (
           <div className="prj-modal-footer">
-            <a href={project.paper} className="btn btn-primary" target="_blank" rel="noreferrer">
-              View Paper ↗
-            </a>
+            {project.paper && (
+              <a href={project.paper} className="btn btn-primary" target="_blank" rel="noreferrer">
+                View Paper ↗
+              </a>
+            )}
+            {project.repo && (
+              <a href={project.repo} className="btn" target="_blank" rel="noreferrer">
+                View Repo ↗
+              </a>
+            )}
           </div>
         )}
       </motion.div>
@@ -614,6 +623,11 @@ const ProjectPanel = ({
             {project.paper && (
               <a href={project.paper} className="btn" target="_blank" rel="noreferrer">
                 View Paper ↗
+              </a>
+            )}
+            {project.repo && (
+              <a href={project.repo} className="btn" target="_blank" rel="noreferrer">
+                View Repo ↗
               </a>
             )}
             <button className="btn prj-expand-btn" onClick={() => onExpand(project)}>

@@ -61,6 +61,17 @@ textarea:focus {
   border-color: var(--color-primary-variant);
 }
 
+@media screen and (min-width: 1025px) {
+  .contact_options {
+    align-items: center;
+  }
+
+  .contact_option {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .container.contact_container {
     grid-template-columns: 1fr;

@@ -18,6 +18,12 @@
   margin-bottom: 1.5rem;
 }
 
+.resume_note {
+  max-width: 480px;
+  margin: -0.75rem auto 1.5rem;
+  line-height: 1.6;
+}
+
 .resume_actions {
   display: flex;
   gap: 1rem;
@@ -31,43 +37,8 @@
   gap: 0.5rem;
 }
 
-.resume_viewer {
-  width: 100%;
-  max-width: 850px;
-  height: 80vh;
-  border-radius: 1rem;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: var(--color-bg-variant);
-}
-
-.resume_viewer object {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-.resume_viewer p {
-  padding: 2rem;
-  color: var(--color-light);
-}
-
-.resume_viewer a {
-  color: var(--color-primary-variant);
-}
-
-@media (prefers-color-scheme: light) {
-  .resume_viewer {
-    border-color: rgba(0, 0, 0, 0.1);
-  }
-}
-
 @media screen and (max-width: 600px) {
   .resume_page {
     padding: 3rem 1rem 2rem;
-  }
-
-  .resume_viewer {
-    height: 70vh;
   }
 }

@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import "./about.css";
 import Me from "../../assets/me.webp";
-import { FaAward, FaCertificate, FaFolder, FaBrain, FaGraduationCap } from "react-icons/fa";
+import { FaAward, FaCertificate, FaFolder, FaGraduationCap } from "react-icons/fa";
 import AnimatedSection from "../animated-section/AnimatedSection";
 import MagneticButton from "../magnetic-button/MagneticButton";
 import BlurImage from "../blur-image/BlurImage";
@@ -157,15 +157,6 @@ const About = () => {
                 <FaFolder className="about_icon" />
                 <h5>Projects</h5>
                 <CountingStat target={10} suffix="+" label="projects completed" />
-              </a>
-              <a
-                className="about_card about_card--link"
-                href="#ai-ml-ops"
-                aria-label="See my AI/ML Ops work"
-              >
-                <FaBrain className="about_icon" />
-                <h5>AI/ML Ops</h5>
-                <small>Enterprise adoption</small>
               </a>
               <a
                 className="about_card about_card--link"

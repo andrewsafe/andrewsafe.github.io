@@ -6,7 +6,6 @@ import {
   FaProjectDiagram,
   FaRobot,
   FaWrench,
-  FaBrain,
   FaGraduationCap,
 } from "react-icons/fa";
 import { MdContactMail } from "react-icons/md";
@@ -22,7 +21,6 @@ const sectionIds = [
   "project",
   "experience",
   "services",
-  "ai-ml-ops",
   "contact",
 ];
 
@@ -110,15 +108,6 @@ const Nav = () => {
           aria-label="Services"
         >
           <FaWrench />
-        </a>
-      </MagneticButton>
-      <MagneticButton>
-        <a
-          href="#ai-ml-ops"
-          className={activeSection === "ai-ml-ops" ? "active" : ""}
-          aria-label="AI/ML Ops"
-        >
-          <FaBrain />
         </a>
       </MagneticButton>
       <MagneticButton>
