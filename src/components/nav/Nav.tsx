@@ -7,6 +7,8 @@ import {
   FaRobot,
   FaWrench,
   FaGraduationCap,
+  FaFileAlt,
+  FaGithub,
 } from "react-icons/fa";
 import { MdContactMail } from "react-icons/md";
 import { SiKaggle } from "react-icons/si";
@@ -19,8 +21,10 @@ const sectionIds = [
   "local-ai",
   "kaggle",
   "project",
+  "writing",
   "experience",
   "services",
+  "github-activity",
   "contact",
 ];
 
@@ -94,6 +98,15 @@ const Nav = () => {
       </MagneticButton>
       <MagneticButton>
         <a
+          href="#writing"
+          className={activeSection === "writing" ? "active" : ""}
+          aria-label="Writing"
+        >
+          <FaFileAlt />
+        </a>
+      </MagneticButton>
+      <MagneticButton>
+        <a
           href="#experience"
           className={activeSection === "experience" ? "active" : ""}
           aria-label="Experience"
@@ -108,6 +121,15 @@ const Nav = () => {
           aria-label="Services"
         >
           <FaWrench />
+        </a>
+      </MagneticButton>
+      <MagneticButton>
+        <a
+          href="#github-activity"
+          className={activeSection === "github-activity" ? "active" : ""}
+          aria-label="GitHub Activity"
+        >
+          <FaGithub />
         </a>
       </MagneticButton>
       <MagneticButton>

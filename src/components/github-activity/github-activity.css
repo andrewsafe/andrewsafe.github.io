@@ -1,0 +1,46 @@
+/* ══════════════════════════════════════
+   GitHub Activity
+   ══════════════════════════════════════ */
+
+.gh-activity_container {
+  text-align: center;
+}
+
+.gh-activity_intro {
+  max-width: 560px;
+  margin: 1.5rem auto 2rem;
+  color: var(--color-light);
+  line-height: 1.6;
+}
+
+.gh-activity_card {
+  background: var(--color-bg-variant);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  overflow: hidden;
+}
+
+.gh-activity_graph {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.gh-activity_ctas {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.gh-activity_ctas .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (prefers-color-scheme: light) {
+  .gh-activity_card {
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+}

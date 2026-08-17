@@ -1,0 +1,93 @@
+/* ══════════════════════════════════════
+   Writing
+   ══════════════════════════════════════ */
+
+.writing_intro {
+  max-width: 640px;
+  margin: 1.5rem auto 2.5rem;
+  text-align: center;
+  color: var(--color-light);
+  line-height: 1.6;
+}
+
+.writing_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+.writing_card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--color-bg-variant);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  padding: 1.75rem;
+  color: inherit;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.4s ease;
+}
+
+.writing_card:hover {
+  border-color: rgba(79, 172, 254, 0.25);
+  box-shadow:
+    0 0 0 1px rgba(79, 172, 254, 0.08),
+    0 8px 30px rgba(79, 172, 254, 0.1);
+}
+
+.writing_card-icon {
+  font-size: 1.1rem;
+  color: var(--color-primary-variant);
+  margin-bottom: 1rem;
+}
+
+.writing_card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 0.75rem;
+}
+
+.writing_card-desc {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--color-light);
+  flex-grow: 1;
+  margin-bottom: 1.25rem;
+}
+
+.writing_card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-light);
+  opacity: 0.75;
+}
+
+.writing_card-pages {
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 600px) {
+  .writing_grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .writing_card {
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .writing_card-footer {
+    border-top-color: rgba(0, 0, 0, 0.1);
+  }
+}

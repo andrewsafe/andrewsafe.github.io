@@ -7,8 +7,10 @@ import Experience from "./components/experience/Experience";
 import Services from "./components/services/Services";
 import Doctorate from "./components/doctorate/Doctorate";
 import Projects from "./components/project/Projects";
+import Writing from "./components/writing/Writing";
 import Kaggle from "./components/kaggle/Kaggle";
 import LocalAI from "./components/local-ai/LocalAI";
+import GithubActivity from "./components/github-activity/GithubActivity";
 import Testimonials from "./components/testimonials/Testimonials";
 import Contact from "./components/contact/Contact";
 import Footer from "./components/footer/Footer";
@@ -77,9 +79,11 @@ const Home = () => (
     <LocalAI />
     <Kaggle />
     <Projects />
+    <Writing />
     <Nav />
     <Experience />
     <Services />
+    <GithubActivity />
     <Testimonials />
     <Contact />
     <Footer />
