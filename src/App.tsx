@@ -21,7 +21,6 @@ import NoiseOverlay from "./components/noise-overlay/NoiseOverlay";
 import useDynamicFavicon from "./hooks/useDynamicFavicon";
 import usePerformanceTier from "./hooks/usePerformanceTier";
 
-const MarketButton = lazy(() => import("./components/market-button/MarketButton"));
 const Resume = lazy(() => import("./components/resume/Resume"));
 const Certifications = lazy(() => import("./components/certifications/Certifications"));
 const NotFound = lazy(() => import("./components/not-found/NotFound"));
@@ -128,14 +127,6 @@ const AnimatedRoutes = () => {
             }
           />
           <Route
-            path="/sonnysafe"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <MarketButton />
-              </Suspense>
-            }
-          />
-          <Route
             path="*"
             element={
               <motion.div {...pageTransition}>
@@ -151,25 +142,16 @@ const AnimatedRoutes = () => {
   );
 };
 
-const AppChrome = () => {
-  const location = useLocation();
-  const isStandalonePage = location.pathname.startsWith("/sonnysafe");
-
-  return (
-    <>
-      {!isStandalonePage && (
-        <>
-          <CursorGlow />
-          <BackToTop />
-          <CommandPalette />
-          <EasterEgg />
-          <NoiseOverlay />
-        </>
-      )}
-      <AnimatedRoutes />
-    </>
-  );
-};
+const AppChrome = () => (
+  <>
+    <CursorGlow />
+    <BackToTop />
+    <CommandPalette />
+    <EasterEgg />
+    <NoiseOverlay />
+    <AnimatedRoutes />
+  </>
+);
 
 const App = () => {
   useDynamicFavicon();

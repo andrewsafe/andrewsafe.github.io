@@ -71,6 +71,21 @@
   font-size: 1.2rem;
 }
 
+.hero_badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.45rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-white);
+  border-radius: 999px;
+  border: 1px solid rgba(79, 172, 254, 0.4);
+  background: rgba(79, 172, 254, 0.08);
+}
+
 /* ── About content scrolls over faded hero ── */
 .about_container {
   position: relative;

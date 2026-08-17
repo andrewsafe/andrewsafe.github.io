@@ -101,6 +101,7 @@ const About = () => {
       <p className="hero_subtitle text-light">
         Full-Stack Software Engineer | Enterprise Apps & AI
       </p>
+      <p className="hero_badge">M.S. Artificial Intelligence, Johns Hopkins University (2026)</p>
     </>
   );
 
@@ -176,7 +177,7 @@ const About = () => {
                 <small>Johns Hopkins</small>
               </a>
             </div>
-            <WordReveal text="Software engineer at JPMorganChase building enterprise AI systems and full-stack platforms. Deep learning research: extended Monodepth2 with per-pixel uncertainty for specular surface depth estimation. Running local 26B MoE inference on RTX 5080 via Docker and Ollama. AWS Solutions Architect Associate candidate." />
+            <WordReveal text="Software engineer at JPMorganChase building enterprise AI systems and full-stack platforms. Recently completed an M.S. in Artificial Intelligence at Johns Hopkins University, capped by a carbon-aware MLOps capstone: an XGBoost + K-Means pipeline deployed on Azure ML, graded 100/100 across proposal, algorithm selection, and final demo. Deep learning research: extended Monodepth2 with per-pixel uncertainty for specular surface depth estimation. Running local 26B MoE inference on RTX 5080 via Docker and Ollama. AWS Solutions Architect Associate candidate." />
             <div className="about_ctas">
               <MagneticButton>
                 <a href="#project" className="btn btn-primary">

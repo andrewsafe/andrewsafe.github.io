@@ -15,6 +15,7 @@ import IMG10 from "../../assets/monodepth2-uncertainty.webp";
 import IMG11 from "../../assets/monodepth2-disp.webp";
 import IMG12 from "../../assets/localai-stack.webp";
 import IMG13 from "../../assets/meg-decoding.webp";
+import IMG16 from "../../assets/carbon-mlops.webp";
 import AnimatedSection from "../animated-section/AnimatedSection";
 import TiltCard from "../tilt-card/TiltCard";
 import BlurImage from "../blur-image/BlurImage";
@@ -43,58 +44,27 @@ interface Project {
 
 const projects: Project[] = [
   {
-    id: 14,
-    image: IMG3,
-    title: "Agentic AI Coding Pipeline — Enterprise SDLC Automation",
-    category: "AI Engineering / Enterprise",
+    id: 16,
+    image: IMG16,
+    title: "Carbon-Aware MLOps Pipeline",
+    category: "MLOps / Capstone, M.S. Artificial Intelligence",
     description:
-      "Internal enterprise AI coding agent at JPMorganChase that ingests Jira tickets, generates repository-aware code via Amazon Bedrock (Claude Sonnet/Opus, GPT-4, Gemini, Codex), and ships production-ready pull requests to Bitbucket — operationalizing AI-assisted SDLC delivery across engineering teams at scale.",
-    techStack: [
-      "Amazon Bedrock",
-      "Claude",
-      "OpenAI Codex",
-      "Python",
-      "Jira",
-      "Bitbucket",
-      "AI Governance",
-    ],
-    accentHue: 260,
+      "Capstone project for the M.S. in Artificial Intelligence (Johns Hopkins, EN.605.603 AI/ML Ops): a carbon-aware scheduling advisor combining an XGBoost classifier, XGBoost regressor, and K-Means clustering into a Carbon-Opportunity Signal (Green Window Probability + RUN/WAIT/ADJUST), served via FastAPI and Azure ML. Classifier hit 86.1% accuracy / F1 0.87; regression results were reported honestly when they missed target. Graded 100/100 on proposal, algorithm selection, and final demo.",
+    techStack: ["XGBoost", "K-Means", "FastAPI", "Azure ML", "Python", "Pandas", "MLOps"],
+    accentHue: 145,
+    paper: "/carbon-aware-mlops-paper.pdf",
     expandedContent: {
       overview:
-        "An internal enterprise AI developer agent platform built at JPMorganChase that connects Jira, Amazon Bedrock, and Bitbucket into a closed-loop autonomous SDLC pipeline. A developer creates a Jira ticket; the agent ingests it, pulls the relevant repository context, selects the best LLM for the task (Claude Sonnet/Opus, OpenAI Codex, GPT-4, or Gemini), generates code changes, and opens a production-ready pull request — all without a human writing a single line. The architecture is model-agnostic by design: any new LLM can be swapped in without changing downstream orchestration logic.",
+        "AI data centers are projected to push global electricity consumption past 800 TWh by 2028 (IEA, 2025), comparable to a mid-sized country's annual draw. This capstone treats when and where a workload runs as a decision variable rather than a fixed constraint, and operationalizes that decision as a single actionable signal. Three models were trained independently: an XGBoost classifier labeling a forecast window as low- or high-carbon, an XGBoost regressor estimating national data-center capacity growth from AI-adoption indicators, and a K-Means (k=6) clustering step assigning countries to carbon-sustainability archetypes. These are then fused by a Carbon-Opportunity Signal layer into a Green Window Probability and a RUN WORKLOAD / WAIT / ADJUST recommendation, served identically from a local FastAPI process and an Azure ML Managed Online Endpoint.",
       approach: [
-        "Jira-to-PR pipeline: webhooks capture ticket creation/update events, extract acceptance criteria and linked code context, and route to the appropriate LLM via Amazon Bedrock's unified API — one interface across Claude Sonnet/Opus, OpenAI Codex, GPT-4, and Gemini",
-        "Repository-scoped AI governance: each repository optionally defines a persistent per-repository instructions file injected as a system prompt for every generation request — constraining LLM output to the team's architectural patterns, security policies, and coding standards without sacrificing multi-model flexibility",
-        "Self-reinforcing organizational memory: a post-merge hook reads PR reviewer comments and propagates accepted feedback as permanent additions to that instructions file — each merged PR makes future generations smarter; alignment improves automatically without manual instruction updates",
-        "Human-in-the-loop design: the agent opens PRs for human review rather than auto-merging; the reviewer is the final gate — AppSec compliance is maintained because no AI output reaches production without engineer sign-off",
-        "Multi-model orchestration: task routing selects the model based on task type (Claude for reasoning-heavy refactors, Codex for completion-heavy boilerplate, GPT-4 for cross-file synthesis) — each model runs through Bedrock's unified API so orchestration is model-agnostic",
-        "Enterprise AI enablement: delivered AI adoption presentations to 25 teams within 24 hours covering governance frameworks, meta-prompting strategies, and Claude Code/Copilot workflows — onboarded 4 engineering teams in a single day and measurably compressed development velocity across the organization",
+        "Classifier (XGBoost): trained on 379k hourly EIA-930 grid-region rows with cyclical hour/day/month encodings, region one-hot features, and renewable percentage, achieving 86.1% accuracy and F1 0.87 on a 75.8k-row held-out test set, meeting both proposal targets",
+        "Regressor (XGBoost): predicted national data-center power capacity from AI-adoption indicators across 34 countries; country-grouped cross-validated R² came in at 0.16 against a 0.70 target, reported honestly alongside the leaky, over-optimistic 0.51 a naive random split would have produced, since the gap between the two is the clearest MLOps lesson in the project",
+        "Clustering (K-Means, k=6): assigned 29 countries to carbon-sustainability archetypes from renewable share, emissions, and AI-infrastructure scores; silhouette 0.22, validated by elbow method, yielding six hand-labeled, business-interpretable profiles",
+        "Real-world data deprecation: two of six originally-proposed Kaggle datasets were removed mid-project and Electricity Maps moved its hourly data behind a paid API; all three substitutions are documented rather than hidden, using EIA-930 (U.S. government, free) and a GAID compilation as durable replacements",
+        "Carbon-Opportunity Signal: a FastAPI service with five routes (/predict/window, /predict/facility, /predict/growth, /archetypes/{country}, /regions) fusing all three models into one recommendation, deployed to an Azure ML Managed Online Endpoint via declarative endpoint.yml/deployment.yml",
       ],
       result:
-        "In active use across engineering teams at JPMorganChase, operationalizing AI-assisted development at enterprise scale. The persistent instruction injection system achieved AppSec-compliant AI code generation — meeting a compliance requirement that initially seemed at odds with multi-LLM flexibility. The self-reinforcing memory mechanism means the system gets progressively better aligned to each team's engineering standards with zero manual maintenance: reviewer feedback automatically becomes institutional AI knowledge. The platform was presented to 25 teams within 24 hours and has driven measurable compression of development velocity across the organization.",
-    },
-  },
-  {
-    id: 15,
-    image: IMG3,
-    title: "Full-Stack Algorithmic Trading Platform",
-    category: "Full Stack / Open Source",
-    description:
-      "Multi-user algorithmic trading platform with strategy backtesting, live deployment management, and real-time performance analytics. Contributed OIDC authentication, user profile management API (GET + PATCH /api/users/me), live deployment control UI, and a full settings page to an open-source collaborative build.",
-    techStack: ["Next.js", "FastAPI", "PostgreSQL", "SQLAlchemy", "TypeScript", "Python", "OIDC"],
-    accentHue: 150,
-    expandedContent: {
-      overview:
-        "An open-source multi-user algorithmic trading platform enabling teams to write, backtest, and deploy trading strategies with paper and live trading support. The platform consists of a Next.js frontend, FastAPI backend, PostgreSQL database with SQLAlchemy ORM, and Alembic migrations. Contributed several full-stack features: OIDC authentication, user settings and profile management (backend API + frontend page), and a live deployment management UI for monitoring running strategies.",
-      approach: [
-        "OIDC authentication: implemented the full authorization code + PKCE flow — Next.js frontend stores tokens in sessionStorage, apiFetch() wrapper attaches Bearer headers on every request, fires auth:unauthorized events on 401s so AuthProvider can redirect to login; FastAPI Depends(get_current_user) gates every protected route",
-        "User profile API: GET + PATCH /api/users/me using the service-layer pattern — UserService owns all database logic (with_for_update() for race-safe writes, flush-before-commit for immediate return of updated state); FastAPI routes handle Pydantic validation (field_validators strip whitespace, coerce empty strings to null) and 404/401 error translation",
-        "Settings page: react-hook-form + zod for client-side validation with zodResolver, live avatar preview via form.watch() subscribing to field changes in real time, Sonner toast notifications, and auth context refresh() after save to synchronize the header display name without a page reload",
-        "Deployment management UI: frontend interface for listing active strategy deployments, showing real-time status (running/paused/stopped), triggering pause/resume/delete, and displaying performance statistics (Sharpe ratio, max drawdown, win rate, P&L) from the statistics API with cursor-based pagination",
-        "Centralized API client: all backend calls flow through apiFetch() which attaches auth headers, dispatches auth:unauthorized on 401, and exposes typed helpers (getUserProfile, updateUserProfile, listDeployments, listStatistics) for type-safe consumption — adding a new API endpoint is a single typed function",
-      ],
-      result:
-        "Live contributions to an open-source algorithmic trading platform on GitHub. The user profile and settings system is on the platform's main branch (PR #11). The deployment management UI gives traders real-time visibility into running strategies with one-click control. The OIDC authentication and centralized API client provide a clean, extensible foundation for every future API surface the platform adds. Demonstrates full-stack ownership — from SQLAlchemy model to polished Next.js UI — within an existing production codebase without regressions.",
+        "Graded 100/100 on the Preliminary Proposal, 100/100 on Algorithm Selection, and 100/100 on the Final Demonstration. Instructor feedback specifically praised the honest regression reporting: “you were also clear about the weaker regression results rather than overstating the model performance... this was a solid application of the MLOps lifecycle from data and experimentation through deployment and consumption.” The completed capstone paper, covering data engineering, algorithm selection, results, honest limitations, and deployment, is available as a full write-up. This project marked the completion of the M.S. in Artificial Intelligence at Johns Hopkins University.",
     },
   },
   {
@@ -579,9 +549,9 @@ const ProjectIntroPanel = () => (
         Projects
       </h2>
       <p className="prj-intro-body">
-        Fifteen projects spanning enterprise AI systems, full-stack web applications, deep learning
-        research, AI infrastructure, DevOps pipelines, and client work. Each one built end-to-end,
-        from architecture decisions to deployment.
+        Fourteen projects spanning MLOps and applied AI research, full-stack web applications, deep
+        learning research, AI infrastructure, DevOps pipelines, and client work. Each one built
+        end-to-end, from architecture decisions to deployment.
       </p>
       <div className="prj-intro-ctas">
         <a
