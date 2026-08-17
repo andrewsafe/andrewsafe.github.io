@@ -138,6 +138,11 @@ export const tabs: TabData[] = [
       { year: "2024", text: "Started MS at Johns Hopkins", linkedCardId: "acad-dnn" },
       { year: "2024", text: "Neural Network ROI Research", linkedCardId: "acad-dnn" },
       { year: "2025", text: "Anthropic Claude AI Courses", linkedCardId: "acad-ai" },
+      {
+        year: "2026",
+        text: "M.S. completed: Carbon-Aware MLOps capstone, 100/100",
+        linkedCardId: "acad-ai",
+      },
     ],
     bento: [
       {
@@ -162,8 +167,8 @@ export const tabs: TabData[] = [
         id: "acad-ai",
         type: "showcase",
         size: "sm",
-        title: "Applied AI",
-        description: "Claude courses, prompt engineering, model evaluation",
+        title: "M.S. Artificial Intelligence",
+        description: "Completed 2026: Carbon-Aware MLOps capstone, XGBoost + K-Means, 100/100",
       },
     ],
   },
