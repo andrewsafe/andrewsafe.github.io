@@ -2,43 +2,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   min-height: 100vh;
   text-align: center;
-  padding: 4rem 2rem 3rem;
-  gap: 1.75rem;
+  padding: 2rem;
+  gap: 1.5rem;
 }
 
-.resume_header h1 {
-  font-size: 2.6rem;
-  margin-bottom: 0.5rem;
+.resume_page h1 {
+  font-size: 3rem;
 }
 
-.resume_header p {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
+.resume_page p {
+  font-size: 1.2rem;
+  max-width: 500px;
+  color: var(--color-light);
 }
 
-.resume_note {
-  max-width: 480px;
-  margin: -0.75rem auto 1.5rem;
-  line-height: 1.6;
-}
-
-.resume_actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.resume_actions .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-@media screen and (max-width: 600px) {
-  .resume_page {
-    padding: 3rem 1rem 2rem;
-  }
+.resume_page a:not(.btn) {
+  color: var(--color-primary-variant);
 }
