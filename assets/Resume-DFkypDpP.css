@@ -1,0 +1,1 @@
+.resume_page{text-align:center;flex-direction:column;justify-content:center;align-items:center;gap:1.5rem;min-height:100vh;padding:2rem;display:flex}.resume_page h1{font-size:3rem}.resume_page p{max-width:500px;color:var(--color-light);font-size:1.2rem}.resume_page a:not(.btn){color:var(--color-primary-variant)}
