@@ -15,10 +15,21 @@ const detectWebGLRenderer = (): string => {
 
 const SOFTWARE_RENDERERS = ["swiftshader", "llvmpipe", "softpipe", "microsoft basic render driver"];
 
+const isTouchPrimary = (): boolean =>
+  window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
+
 const detectTier = (): PerformanceTier => {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     return "minimal";
   }
+
+  // Touch-primary devices (phones/tablets) can't be trusted by hardwareConcurrency/
+  // deviceMemory/WebGL-renderer heuristics: Safari never exposes deviceMemory or the
+  // WEBGL_debug_renderer_info extension, and modern phone chips report enough cores
+  // to dodge the cores check too, so every heuristic below reads as "full power" even
+  // though mobile compositors choke on stacked backdrop-filter blur + scroll-linked
+  // animation. Cap touch devices at "reduced" regardless of what the score says.
+  const touchCeiling: PerformanceTier = isTouchPrimary() ? "reduced" : "full";
 
   let score = 0;
 
@@ -35,7 +46,9 @@ const detectTier = (): PerformanceTier => {
     score += 3;
   }
 
-  return score >= 3 ? "reduced" : "full";
+  const scoredTier: PerformanceTier = score >= 3 ? "reduced" : "full";
+
+  return touchCeiling === "reduced" && scoredTier === "full" ? "reduced" : scoredTier;
 };
 
 let cachedTier: PerformanceTier | null = null;

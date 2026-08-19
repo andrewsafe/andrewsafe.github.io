@@ -8,7 +8,6 @@ import {
   FaWrench,
   FaGraduationCap,
   FaFileAlt,
-  FaGithub,
 } from "react-icons/fa";
 import { MdContactMail } from "react-icons/md";
 import { SiKaggle } from "react-icons/si";
@@ -24,7 +23,6 @@ const sectionIds = [
   "writing",
   "experience",
   "services",
-  "github-activity",
   "contact",
 ];
 
@@ -121,15 +119,6 @@ const Nav = () => {
           aria-label="Services"
         >
           <FaWrench />
-        </a>
-      </MagneticButton>
-      <MagneticButton>
-        <a
-          href="#github-activity"
-          className={activeSection === "github-activity" ? "active" : ""}
-          aria-label="GitHub Activity"
-        >
-          <FaGithub />
         </a>
       </MagneticButton>
       <MagneticButton>
