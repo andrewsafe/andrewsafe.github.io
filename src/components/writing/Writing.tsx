@@ -18,7 +18,7 @@ const papers: Paper[] = [
     description:
       "Carbon-aware MLOps capstone: data engineering through a real dataset deprecation, algorithm selection, an honest evaluation of a regression model that missed its target, and Azure ML deployment for a scheduling advisor. Graded 100/100.",
     meta: "M.S. Artificial Intelligence Capstone, Johns Hopkins",
-    pages: 15,
+    pages: 21,
     href: "/carbon-aware-mlops-paper.pdf",
   },
   {
